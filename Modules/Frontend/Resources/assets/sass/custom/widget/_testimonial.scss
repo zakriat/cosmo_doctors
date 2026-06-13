@@ -1,0 +1,29 @@
+.testimonial-card {
+    
+    .testimonial-desc {
+        color: var(--bs-heading-color);
+    }
+
+    .author-img {
+        width: 3.75rem;
+        min-width: 3.75rem;
+        height: 3.75rem;
+        object-fit: cover;
+        object-position: top;
+    }
+
+    .vector-arrow {
+        position: absolute;
+        right: 28%;
+        top: 69%;
+    }
+
+}
+
+@include media-breakpoint-down(md) {
+    .testimonial-card {
+        .vector-arrow {
+           display: none;
+        }
+    }
+}

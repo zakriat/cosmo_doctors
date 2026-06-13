@@ -1,0 +1,120 @@
+// Datatable 
+.custom-card-table {
+
+  thead,
+  tbody,
+  tfoot,
+  tr,
+  td,
+  th {
+    white-space: initial;
+  }
+
+  thead {
+    display: none;
+  }
+}
+
+tbody {
+
+  td,
+  tr {
+    border: 0 !important;
+    display: block !important;
+
+    .sorting_1 {
+      padding: 0;
+    }
+  }
+}
+
+table {
+  &.dataTable {
+    margin: 0;
+  }
+}
+
+// pagination
+.dataTables_wrapper {
+  .data_table_widgets {
+    margin-top: 3.75rem;
+
+    .dataTables_info {
+      padding-top: 0
+    }
+  }
+
+  .dataTables_paginate {
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    .pagination {
+      .page-item {
+        .page-link {
+          padding: 0;
+          height: 2.5rem;
+          width: 2.5rem;
+          line-height: 2.5rem;
+          text-align: center;
+        }
+
+        &.previous {
+          .page-link {
+            font-size: 0;
+            position: relative;
+
+            &::before {
+              content: "\e128";
+              font-family: "Phosphor" !important;
+              font-size: 1rem;
+              font-weight: $font-weight-medium;
+            }
+          }
+        }
+
+        &.next{
+          .page-link {
+            font-size: 0;
+            position: relative;
+
+            &::before {
+              content: "\e12a";
+              font-family: "Phosphor" !important;
+              font-size: 1rem;
+              font-weight: $font-weight-medium;
+            }
+          }
+        }
+
+      }
+
+    }
+  }
+}
+
+@include media-breakpoint-down(xl) {
+
+  // pagination
+  .dataTables_wrapper {
+    .data_table_widgets {
+      margin-top: 2rem;
+    }
+  }
+}
+
+@include media-breakpoint-down(md) {
+  div {
+    &.dataTables_wrapper {
+      .datatable-pagination-wrapper {
+        div {
+          &.dataTables_paginate {
+            ul.pagination {
+              justify-content: start !important;
+            }
+          }
+        }
+
+      }
+    }
+  }
+}

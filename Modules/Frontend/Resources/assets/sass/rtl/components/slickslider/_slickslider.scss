@@ -1,0 +1,36 @@
+.slick-general {
+  .slick-list {
+    .slick-track {
+      margin-left: auto;
+      margin-right: 0;
+    }
+  }
+}
+.slide-data-less {
+  .slick-slider {
+    .slick-list {
+      .slick-track {
+        margin-left: auto;
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.slick-slider {
+  .slick-prev {
+    left: auto;
+    right: 10px;
+    &::before{
+      content: "\e13a";
+    }
+  }
+
+  .slick-next {
+      right: auto;
+      left: 10px;
+      &::before{
+        content: "\e138";
+      }
+  }
+}

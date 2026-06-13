@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'lbl_language' => 'Language Option',
+    'lbl_file' => 'Select File to be translate',
+    'lbl_key' => 'Key',
+    'lbl_value' => 'Value',
+    'lbl_timezone' => 'TimeZone',
+    'lbl_data_table_limit' => 'DataTable Limits',
+    'lbl_currency' => 'Currency',
+    'soon' => 'Soon',
+    'lbl_body_chart'=>'Body Chart',
+    'lbl_theme_mode'=>'Theme Mode',
+    'Menubar_position'=>'Menu Bar Position',
+    'lbl_image_handling'=>'Select Image Type',
+    'lbl_menu_items'=>'Menu',
+    'btn_add_new_images' => 'Add Image Template',
+    'tbl_header_name' => 'Name',
+    'tbl_header_image' => 'Image',
+    'tbl_header_default' => 'Default',
+    'tbl_header_action' => 'Action',
+    'image_template_section_title' => 'Image template',
+    'lbl_default' => 'Default',
+    'btn_remove' => 'Remove',
+    'lbl_date_formate' => 'Date Format',
+    'lbl_time_formate' => 'Time Format',
+];

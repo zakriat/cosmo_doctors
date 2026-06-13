@@ -1,0 +1,120 @@
+<!-- MULTIPLE AUDIO FILES UI ENHANCEMENT -->
+<!-- Add this section AFTER the existing recording controls and BEFORE the transcription cards -->
+
+<!-- File Upload Button (Add next to record button) -->
+<div class="mb-3 d-flex align-items-center gap-2 flex-wrap">
+    <button type="button" id="record-audio-btn" class="btn btn-outline-primary btn-sm">
+        <i class="ph ph-microphone"></i> Record Audio
+    </button>
+    
+    <!-- NEW: Upload Audio Files Button -->
+    <button type="button" id="upload-audio-btn" class="btn btn-outline-secondary btn-sm">
+        <i class="ph ph-upload"></i> Upload Audio Files
+    </button>
+    <input type="file" id="audio-file-input" accept="audio/*" multiple class="d-none">
+    
+    <button type="button" id="stop-recording-btn" class="btn btn-danger btn-sm d-none">
+        <i class="ph ph-stop"></i> Stop Recording
+    </button>
+    <button type="button" id="cancel-recording-btn" class="btn btn-outline-secondary btn-sm d-none">
+        Cancel Recording
+    </button>
+    <span id="recording-timer" class="text-muted d-none fw-bold">00:00</span>
+</div>
+
+<!-- Audio Player (Modified to show name) -->
+<div id="audio-player-container" class="mb-3 d-none">
+    <div class="audio-player-wrapper p-3 border rounded bg-light">
+        <div class="mb-2">
+            <small class="text-muted">Current Audio:</small>
+            <strong id="audio-name-display" class="d-block">Recording 1</strong>
+        </div>
+        <audio id="audio-player" controls class="w-100 mb-2"></audio>
+        <div class="d-flex gap-2 flex-wrap">
+            <!-- Changed button text to "Add to Queue" -->
+            <button type="button" id="transcribe-btn" class="btn btn-primary btn-sm">
+                <i class="ph ph-plus-circle"></i> Add to Queue
+            </button>
+            <button type="button" id="delete-recording-btn" class="btn btn-outline-danger btn-sm">
+                <i class="ph ph-trash"></i> Delete Recording
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- NEW: Audio Queue Container -->
+<div id="audio-queue-container" class="mb-4 d-none">
+    <div class="card border-primary">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <div>
+                <i class="ph ph-queue me-2"></i>
+                <strong>Audio Queue</strong>
+                <span class="badge bg-white text-primary ms-2" id="queue-count">0</span>
+            </div>
+            <div class="d-flex gap-2">
+                <button type="button" id="transcribe-all-btn" class="btn btn-sm btn-light">
+                    <i class="ph ph-text-aa"></i> Transcribe All
+                </button>
+                <button type="button" id="clear-queue-btn" class="btn btn-sm btn-outline-light">
+                    <i class="ph ph-trash"></i> Clear
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-3">
+            <div id="audio-queue-list">
+                <!-- Queue items will be dynamically inserted here -->
+            </div>
+            
+            <!-- Add All to Notes Button (shown when transcriptions are complete) -->
+            <div class="mt-3 d-none" id="add-all-to-notes-container">
+                <button type="button" id="add-all-to-notes-btn" class="btn btn-success w-100">
+                    <i class="ph ph-check-circle"></i> Add All Transcriptions to Notes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add this CSS for styling -->
+<style>
+.audio-queue-item {
+    transition: all 0.3s ease;
+}
+
+.audio-queue-item:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.medical-category-symptoms { background-color: rgba(255, 107, 107, 0.2); }
+.medical-category-medical_history { background-color: rgba(81, 207, 102, 0.2); }
+.medical-category-medications { background-color: rgba(255, 212, 59, 0.2); }
+.medical-category-personal_info { background-color: rgba(51, 154, 240, 0.2); }
+.medical-category-tests_treatments { background-color: rgba(151, 117, 250, 0.2); }
+.medical-category-allergies { background-color: rgba(255, 146, 43, 0.2); }
+.medical-category-urgent { background-color: rgba(201, 42, 42, 0.2); }
+
+.medical-term-tooltip {
+    cursor: help;
+    border-bottom: 2px dotted currentColor;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.highlight-success {
+    animation: highlightPulse 2s ease;
+}
+
+@keyframes highlightPulse {
+    0%, 100% { background-color: transparent; }
+    50% { background-color: rgba(81, 207, 102, 0.2); }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>

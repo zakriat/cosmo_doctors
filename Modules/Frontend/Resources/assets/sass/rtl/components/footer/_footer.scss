@@ -1,0 +1,20 @@
+.footer {
+    .footer-inner {
+        padding-left: 1.875rem;
+        margin-left: 1.875rem;
+        padding-right: 0;
+        margin-right: 0;
+        border-left: 0.05rem solid var(--bs-heading-color);
+        border-right: none;
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .footer {
+        .footer-inner {
+            margin-left: 0;
+            padding-left: 0;
+            border-left: none;
+        }
+    }
+}

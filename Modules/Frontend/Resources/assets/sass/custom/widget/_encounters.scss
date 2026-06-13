@@ -1,0 +1,45 @@
+.encounters-card{
+    .desc{
+        padding-top: 1.25rem;
+    }
+}
+.modal-enocunter-detail{
+    padding: 1.25rem;
+
+    .encounter-info{
+        overflow-y: auto;
+        max-height: calc(100vh - 6rem);
+    }
+
+    .encounter-basic-info{
+        padding: 1.25rem;
+        background-color: var(--bs-body-bg);
+        .encounter-desc{
+            color: var(--bs-heading-color);
+        }
+        .encounter-descrption{
+            padding-top: 1.25rem;
+            margin-top: 1.25rem;
+        }
+        .detail-desc{
+            color: var(--bs-heading-color);
+        }
+    }
+    .encounter-box{
+        .encounter-list{
+            i{
+                transition: all .3s ease-in-out;
+            }
+            &[aria-expanded="true"]{
+                i{
+                    transform: scale(-1);
+                }
+            } 
+        }
+
+        .encounter-inner-box{
+            background-color: var(--bs-body-bg);
+            padding: 1.25rem;
+        }
+    }
+}

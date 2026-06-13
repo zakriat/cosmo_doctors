@@ -1,0 +1,11 @@
+{
+    "name": "FrontendSetting",
+    "alias": "frontendsetting",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\FrontendSetting\\Providers\\FrontendSettingServiceProvider"
+    ],
+    "files": []
+}

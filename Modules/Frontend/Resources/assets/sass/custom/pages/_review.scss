@@ -1,0 +1,38 @@
+.review-card {
+    margin-bottom: 1rem;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    .review-detail {
+        padding: 1.25rem;
+
+        .user-img {
+            width: 3rem;
+            min-width: 3rem;
+            height: 3rem;
+            object-fit: cover;
+            object-position: top;
+        }
+    }
+}
+
+.rate-us-btn{
+    button{
+        color: var(--bs-gray-600);
+    }
+}
+
+// rate
+.rate-us-modal {
+    .rate-box {
+        .ratting-boxs {
+            i {
+                color: var(--bs-warning);
+                font-size: 1.5rem;
+            }
+        }
+    }
+
+}

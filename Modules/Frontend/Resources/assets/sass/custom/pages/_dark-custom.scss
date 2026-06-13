@@ -1,0 +1,37 @@
+[data-bs-theme='dark'] {
+  header {
+    .navbar-brand {
+      .logo-normal {
+        display: none;
+      }
+      .logo-dark {
+        display: block;
+      }
+    }
+  }
+
+  .footer {
+    .footer-logo {
+      .logo-normal {
+        display: none;
+      }
+  
+      .logo-dark{
+        display: block;
+      }
+    } 
+  }
+
+  .auth-card {
+    .logo-default {
+        .logo-normal {
+          display: none;
+        }
+
+        .logo-dark {
+          display: block;
+        }
+    }
+  }
+
+}

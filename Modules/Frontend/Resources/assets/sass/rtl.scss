@@ -1,0 +1,29 @@
+/*!
+* Version: 5.0.0
+* Template: kiviCare - Frontend Website
+* Author: iqonic.design
+* Design and Developed by: iqonic.design
+* NOTE: This file contains the styling for Template.
+*
+*/
+
+// Configuration
+@import "./bootstrap/functions";
+
+// kiviCare Design system
+@import "./kivicare-design-system/variables";
+@import "./kivicare-design-system/variables-dark";
+@import "./kivicare-design-system/variables/index";
+@import "./bootstrap/variables";
+@import "./bootstrap/variables-dark";
+@import "./bootstrap/maps";
+@import "./bootstrap/mixins";
+@import "./bootstrap/utilities";
+
+// Custom Mixin And Helper
+@import "./kivicare-design-system/helper/mixins";
+@import "./kivicare-design-system/helper/reboot";
+@import "./kivicare-design-system/helper/root";
+
+//rtl
+@import "./rtl/index";

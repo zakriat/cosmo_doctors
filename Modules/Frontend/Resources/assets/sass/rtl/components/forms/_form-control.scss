@@ -1,0 +1,83 @@
+.input-group {
+  &.custom-input-group {
+    .form-control {
+      padding-right: 1.5rem;
+      padding-left: 0;
+      border-right: var(--bs-border-width) solid var(--bs-border-color);
+      border-left: 0;
+      border-top-right-radius: var(--bs-border-radius) !important;
+      border-bottom-right-radius: var(--bs-border-radius) !important;
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+
+      &:focus {
+        border-right: var(--bs-border-width) solid var(--bs-primary);
+      }
+
+      & + .input-group-text {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        border-top-left-radius: var(--bs-border-radius) !important;
+        border-bottom-left-radius: var(--bs-border-radius) !important;
+      }
+    }
+
+    .iti {
+      .form-control {
+        padding-right: 80px !important;
+        padding-left: 16px !important;
+      }
+    }
+
+    .input-group-text {
+      border-right: 0;
+      border-left: var(--bs-border-width) solid var(--bs-border-color);
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+      border-top-left-radius: var(--bs-border-radius) !important;
+      border-bottom-left-radius: var(--bs-border-radius) !important;
+    }
+  }
+}
+.form-check {
+  .form-check-input {
+    float: right;
+    margin-right: -1.5em;
+    margin-left: 0;
+  }
+}
+.date-filter-input{
+  .input-group:not(.has-validation) > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(.form-floating), .input-group:not(.has-validation) > .dropdown-toggle:nth-last-child(n+3), .input-group:not(.has-validation) > .form-floating:not(:last-child) > .form-control, .input-group:not(.has-validation) > .form-floating:not(:last-child) > .form-select {
+    border-top-right-radius: var(--bs-border-radius) !important;
+    border-bottom-right-radius: var(--bs-border-radius) !important;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
+  }
+  .input-group{
+    &.custom-input-group {
+
+      .form-control {
+        border: none
+      }
+      .input-group-text{
+        border: none;
+      }
+    }
+  }
+}
+
+
+.iti--allow-dropdown .iti__flag-container,
+.iti--separate-dial-code .iti__flag-container {
+    right: 15px;
+    left: auto;
+}
+.iti {
+  .iti__country-list {
+    padding: 0 0 0 15px;
+    .iti__country {
+      text-align: right;
+    }
+  }
+}

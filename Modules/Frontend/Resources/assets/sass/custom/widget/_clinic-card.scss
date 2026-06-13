@@ -1,0 +1,41 @@
+.clinics-card {
+    background: var(--bs-gray-900);
+
+    .clinics-img{
+        img{
+            aspect-ratio: 8/4.5;
+        }
+    }
+    .clinics-meta {
+        top: .5rem;
+        right: .5rem;
+    }
+    .clinics-content{
+        i{
+            color: var(--bs-heading-color);
+        }
+    }
+
+    .clinic-checkbox{
+      background-color: var(--bs-primary-bg-subtle);
+      border-color: var(--bs-primary-bg-subtle);
+        top: 1rem;
+        left: 1rem;
+    }
+    &:has(.form-check-input:checked ) {
+        .clinics-img{
+            border-radius: var(--bs-border-radius);
+            background: rgba(var(--bs-primary-rgb),.3);
+            transition: all .5s ease;
+            img{
+                mix-blend-mode: overlay;
+            }
+        }
+    }
+
+}
+.section-bg{
+    .clinics-card {
+        background: var(--bs-gray-500);
+    }
+}

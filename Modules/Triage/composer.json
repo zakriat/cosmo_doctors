@@ -1,0 +1,29 @@
+{
+    "name": "nwidart/triage",
+    "description": "Nurse triage module",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Triage\\": "",
+            "Modules\\Triage\\App\\": "app/",
+            "Modules\\Triage\\Database\\Factories\\": "database/factories/",
+            "Modules\\Triage\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Triage\\Tests\\": "tests/"
+        }
+    }
+}

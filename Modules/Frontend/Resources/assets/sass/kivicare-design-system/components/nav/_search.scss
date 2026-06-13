@@ -1,0 +1,105 @@
+header {
+    .right-panel {
+        .header-search {
+            position: relative;
+            width: 100%;
+
+            .input-group {
+                position: absolute;
+                right: 0;
+                width: 9.875rem;
+                top: 50%;
+                z-index: 9;
+                transform: translateY(-50%);
+                transition: all .3s ease 0s;
+
+                &:has(.form-control:focus) {
+                    width: 21.125rem;
+                }
+
+                .search-submit {
+                    padding: .7rem 0 .7rem 1.125rem;
+                    color: var(--bs-gray-600);
+                    height: 45px;
+                }
+
+                .form-control {
+                    padding: 0.786rem 1rem;
+                    height: 45px;
+                }
+            }
+        }
+    }
+}
+
+.search-box {
+    .custom-search-group {
+        .form-control {
+            border-color: transparent;
+            border-radius: var(--bs-border-radius);
+            background: var(--bs-gray-900);
+            padding-left: 0;
+            border-left: 0;
+            border-top-right-radius: var(--bs-border-radius);
+            border-bottom-right-radius: var(--bs-border-radius);
+
+            &:focus {
+                border-color: var(--bs-primary) !important;
+                background-color: var(--bs-primary-bg-subtle);
+
+                +.input-group-text {
+                    border-color: var(--bs-primary);
+                    background-color: var(--bs-primary-bg-subtle);
+
+                }
+            }
+        }
+
+        .input-group-text {
+            border-bottom-left-radius: var(--bs-border-radius);
+            border-top-left-radius: var(--bs-border-radius);
+            border-color: transparent;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+            &+.form-control {
+                border-top-right-radius: var(--bs-border-radius) !important;
+                border-bottom-right-radius: var(--bs-border-radius) !important;
+            }
+
+            &:has(+.form-control:focus) {
+                border-color: var(--bs-primary);
+                background-color: var(--bs-primary-bg-subtle);
+            }
+        }
+
+    }
+
+    .clear-icon {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+}
+.serach-card{
+    background-color: var(--bs-gray-900);
+}
+
+@include media-breakpoint-down(md) {
+    header {
+        .right-panel {
+            .header-search {
+                .input-group {
+                    position: static;
+                    width: 100%;
+                    transform: none;
+                }
+            }
+            .navbar-nav {
+                gap: .5rem;
+            }
+        }
+
+    }
+}

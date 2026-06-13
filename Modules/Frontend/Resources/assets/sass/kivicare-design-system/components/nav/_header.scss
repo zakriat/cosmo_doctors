@@ -1,0 +1,225 @@
+header {
+  position: relative;
+  display: inline-block;
+  background: var(--bs-gray-900);
+  backdrop-filter: blur(0);
+  width: 100%;
+  z-index: 999;
+  transition: all 0.3s ease-out 0s;
+
+  &.sticky {
+    background: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    backdrop-filter: blur(0.625em);
+    -webkit-animation: header-slide-down 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation: header-slide-down 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation-fill-mode: initial;
+    transition: all 0.3s ease-out 0s;
+  }
+
+  &.header-absolute,
+  .header-absolute {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(0.625em);
+  }
+
+  .toggle-rounded-btn {
+    height: 30px;
+    width: 30px;
+    padding: 0;
+    line-height: 30px;
+    text-align: center;
+    font-size: 20px;
+  }
+
+  .navbar-brand {
+    margin: 0;
+    display: inline-block;
+
+    img {
+      &.logo {
+        height: 2.0625rem;
+        max-height: 2.0625rem;
+      }
+    }
+
+    svg {
+      width: 10rem;
+    }
+
+    .logo-normal {
+      display: block;
+    }
+    .logo-dark {
+      display: none;
+    }
+  }
+
+  .mobile-offcanvas {
+    .navbar-brand {
+      padding: 0;
+    }
+  }
+
+  .navbar-toggler-icon {
+    background-image: none;
+    position: relative;
+    background: none;
+    text-align: center;
+    background: var(--bs-primary);
+  }
+
+  .right-panel {
+    .navbar-nav {
+      gap: 1rem;
+
+      > .nav-item {
+        padding: 10px 0;
+
+        > .nav-link {
+          padding: 0;
+          color: var(--bs-heading-color);
+        }
+      }
+    }
+
+    .theme-scheme-switch {
+      .change-mode {
+        color: var(--bs-heading-color);
+        background: var(--bs-body-bg);
+        height: 2.5rem;
+        width: 2.5rem;
+        line-height: 2.5rem;
+        text-align: center;
+        justify-content: center;
+        border-radius: var(--bs-border-radius);
+
+        span {
+          display: none;
+
+          &.active {
+            display: block;
+          }
+        }
+      }
+    }
+
+    .header-notification {
+      > a {
+        color: var(--bs-heading-color);
+        background: var(--bs-body-bg);
+        height: 2.5rem;
+        width: 2.5rem;
+        line-height: 2.5rem;
+        text-align: center;
+        justify-content: center;
+        border-radius: var(--bs-border-radius);
+      }
+      .notification_list {
+        position: relative;
+        .notification-alert {
+          position: absolute;
+          top: 0;
+          right: 0;
+          background: var(--bs-danger);
+          width: 1.2rem;
+          height: 1.2rem;
+          border-radius: 50%;
+          font-size: 0.75rem;
+          line-height: 17px;
+          color: var(--bs-white);
+        }
+      }
+      &.iq-dropdown {
+        .dropdown-menu {
+          &.sub-drop {
+            min-width: 18.75rem;
+
+            .btn-icon {
+              height: 2.5rem;
+              width: 2.5rem;
+              padding: 0;
+              text-align: center;
+              display: inline-flex;
+              justify-content: center;
+              align-items: center;
+            }
+
+            .iq-sub-card {
+              cursor: pointer;
+              padding: 0.75rem 1.25rem !important;
+              display: inline-block;
+              width: 100%;
+              color: var(--bs-body-color);
+              border-bottom: .063rem solid var(--bs-border-color);
+              transition: all 400ms ease;
+
+              &:last-child {
+                border: none;
+              }
+
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+[data-bs-theme='light'] {
+  .right-panel {
+    .theme-scheme-switch {
+      .change-mode {
+        span {
+          &.light-mode {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}
+
+[data-bs-theme='dark'] {
+  .right-panel {
+    .theme-scheme-switch {
+      .change-mode {
+        span {
+          &.dark-mode {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .header-notification {
+    .dropdown-menu {
+      right: -143px;
+      left: auto;
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  .right-panel {
+    .navbar-nav {
+      gap: 1rem;
+
+      > .nav-item {
+        .login-btn {
+          padding: 8px 24px;
+        }
+      }
+    }
+  }
+}

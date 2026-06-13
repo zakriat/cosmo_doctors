@@ -1,0 +1,108 @@
+.flatpickr-calendar{
+    background: var(--bs-gray-900) !important;
+    box-shadow: var(--bs-box-shadow) !important;
+    border-color: var(--bs-border-color) !important;
+    .flatpickr-innerContainer{
+        .flatpickr-rContainer{
+            .flatpickr-weekdays{
+                .flatpickr-weekdaycontainer{
+                    .flatpickr-weekday{
+                        color: var(--bs-body-color);
+                    }
+                }
+            }
+        }
+    }
+    .flatpickr-day {
+        color: var(--bs-heading-color);
+
+        &.today {
+            border-color: var(--bs-primary);
+            color: var(--bs-white);
+            background: var(--bs-primary);
+        }
+
+        &.inRange,
+        &.nextMonthDay.inRange,
+        &.nextMonthDay.today.inRange {
+            background: var(--bs-gray-100);
+            border-color: var(--bs-gray-100);
+            color: var(--bs-heading-color);
+        }
+
+        &.nextMonthDay:focus,
+        &.nextMonthDay:hover,
+        &.prevMonthDay.inRange,
+        &.prevMonthDay.today.inRange,
+        &.prevMonthDay:focus,
+        &.prevMonthDay:hover {
+            border-color: rgba($white, .3);
+            background: rgba($white, .3);
+            color: rgba($black, .8);
+        }
+
+        &.today.inRange,
+        &:focus,
+        &:hover {
+            border-color: var(--bs-gray-900);
+            background: var(--bs-gray-900);
+            color: var(--bs-body-color);
+        }
+
+        &.nextMonthDay,
+        &.flatpickr-disabled {
+            color: var(--bs-body-color);
+        }
+
+        &.nextMonthDay:hover,
+        &.flatpickr-disabled:hover {
+            border-color: var(--bs-gray-900);
+            background: var(--bs-gray-900);
+            color: var(--bs-body-color);
+        }
+
+        &.inRange {
+            box-shadow: -5px 0 0 var(--bs-border-color), 5px 0 0 var(--bs-border-color);
+        }
+    }
+
+    .dayContainer {
+        .flatpickr-day {
+            &.endRange,
+            &.startRange {
+                background: var(--bs-primary);
+                color: var(--bs-white);
+            }
+        }
+    }
+
+    .flatpickr-months {
+        .flatpickr-month {
+            color: var(--bs-body-color);
+            fill: var(--bs-body-color);
+        }
+        .flatpickr-prev-month,
+        .flatpickr-next-month {
+            color: var(--bs-heading-color);
+            fill: var(--bs-heading-color);
+        }
+    }
+}
+
+
+@include media-breakpoint-down(md) {
+	.fc-toolbar{
+		flex-wrap: wrap;
+        .fc-left{
+            margin-bottom: 1rem;
+        }
+		.fc-right{
+			.fc-button-group{
+				margin-top: 1rem;
+			}
+		}
+	}
+    .flatpickr-calendar.open{
+        left:32px !important;
+    }
+}

@@ -1,0 +1,20 @@
+#dashboard-line-chart {
+    height: 300px;
+}
+
+#grossVolume {
+    min-height: 150px !important;
+}
+
+.apexcharts-xaxistooltip,
+.apexcharts-yaxistooltip {
+    background: var(--bs-body-bg) !important;
+    color: var(--bs-body-color) !important;
+    border: 1px solid var(--bs-border-color) !important;
+}
+.apexcharts-xaxistooltip-bottom:after {
+    border-bottom-color: var(--bs-body-bg) !important;
+}
+.apexcharts-xaxistooltip-bottom:before {
+    border-bottom-color: var(--bs-body-bg) !important;
+}

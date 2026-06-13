@@ -1,0 +1,141 @@
+.blog-detail-card {
+    .blog-images {
+        aspect-ratio: 1/.4;
+        object-position: top;
+    }
+
+    .blog-quote {
+        padding: 2.25rem 2.5rem;
+        position: relative;
+
+        .blog-quote-icon {
+            position: absolute;
+            bottom: 2.25rem;
+            right: 2.25rem;
+        }
+    }
+
+    .blog-desc {
+        margin-bottom: 4.375rem;
+
+        .blog-drop-cap {
+            float: left;
+            line-height: 1;
+            margin: 0 19px;
+        }
+    }
+
+    .blog-detail-content-1 {
+        margin: 4.375rem 0;
+    }
+
+    .blog-detail-content-2 {
+        margin-bottom: 5rem;
+
+        .blog-list-content {
+            margin: 2.188rem 3.125rem;
+
+            li {
+                &::marker {
+                    color: var(--bs-heading-color)
+                }
+
+                margin-bottom: 1.563rem;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    .blog-pagination {
+        .blog-pagination-btn {
+            width: 30%;
+
+            .link {
+                color: var(--bs-body-color);
+            }
+
+            &.active {
+                .link {
+                    color: var(--bs-primary);
+                }
+
+                .blog-pagination-link {
+                    color: var(--bs-heading-color);
+                    text-decoration: underline;
+                }
+            }
+
+            .blog-pagination-image {
+                height: 4.375rem;
+                width: 4.375rem;
+                min-width: 4.375rem;
+            }
+
+            .blog-pagination-link {
+                color: var(--bs-body-color);
+            }
+        }
+    }
+
+    .related-blog {
+        margin-top: 9.375rem;
+    }
+}
+
+@include media-breakpoint-down(lg) {
+    .blog-detail-card {
+        .blog-desc {
+            margin-bottom: 2rem;
+        }
+
+        .blog-detail-content-1 {
+            margin: 2rem 0;
+        }
+
+        .blog-detail-content-2 {
+            margin-bottom: 2rem;
+
+            .blog-list-content {
+                margin: 1rem 1.5rem;
+            }
+
+        }
+
+        .blog-pagination {
+            .blog-pagination-btn {
+                width: 50%;
+            }
+        }
+
+        .related-blog {
+            margin-top: 4.375rem;
+        }
+    }
+}
+
+
+
+
+@include media-breakpoint-down(md) {
+    .blog-detail-card {
+        .blog-quote {
+            .blog-quote-icon {
+                position: static;
+                margin-bottom: .5rem;
+            }
+        }
+
+        .blog-pagination {
+            .blog-pagination-btn {
+                width: 100%;
+            }
+        }
+
+        .related-blog {
+            margin-top: 2rem;
+        }
+    }
+}

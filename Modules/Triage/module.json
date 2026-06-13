@@ -1,0 +1,11 @@
+{
+    "name": "Triage",
+    "alias": "triage",
+    "description": "Nurse triage module for pre-consultation patient routing",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Triage\\Providers\\TriageServiceProvider"
+    ],
+    "files": []
+}

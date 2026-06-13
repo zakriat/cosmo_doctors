@@ -1,0 +1,147 @@
+.widget-tabs {
+    .tab-item {
+        list-style: none;
+        position: relative;
+        transition: opacity 400ms ease-in-out;
+
+        &:not(.active) {
+            opacity: .8;
+            transition: opacity 400ms ease-in-out;
+        }
+
+        cursor: pointer;
+
+        &::before {
+            content: var(--before-content);
+            position: absolute;
+            top: 0px;
+            left: -7px;
+            width: 1.625rem;
+            height: 1.625rem;
+            border: 1px solid;
+            padding: 8px;
+            border-color: var(--bs-white);
+            background-color: var(--bs-white);
+            border-radius: 50%;
+            transition: background-color 400ms ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: .875rem;
+            font-weight: $font-weight-semibold;
+        }
+
+        &:not(:last-child):after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: auto;
+            right: 6%;
+            width: 60%;
+            height: 0.063rem;
+            background-color: #D9D9D9;
+        }
+
+        &.active {
+            &::before {
+                transition: background-color 400ms ease-in-out;
+                background-color: var(--bs-primary);
+                content: var(--before-content);
+                padding: .7rem;
+                color: var(--bs-white);
+                top: -2px;
+            }
+        }
+
+        &:not(.active)[data-check="true"] {
+            opacity: 1;
+
+            &::before {
+                content: '';
+                padding: 0.7rem;
+                top: -2px;
+                transition: background-color 400ms ease-in-out;
+                background-color: var(--bs-success);
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+            }
+        }
+
+        .tab-link,
+        .tab-link h6,
+        .tab-link h5 {
+            transition: opacity .2s ease-in-out;
+            color: var(--bs-white);
+        }
+    }
+}
+.booked-time{
+    .time-slot-btn{
+        background-color: var(--bs-body-bg);
+        color: var(--bs-body-color);
+        &:hover, &.active{
+            background-color: var(--bs-primary);
+            color: var(--bs-white);
+        }
+        &.disabled{
+            background-color: var(--bs-gray-700);
+            color: var(--bs-body-color);
+            text-decoration-line: line-through;
+            border: none;
+        }
+    }
+}
+
+.uppy-Dashboard{
+    .uppy-Dashboard-inner {
+        background-color: var(--bs-gray-900);
+        width: 100% !important;
+        border-color: var(--bs-border-color);
+    }
+    .uppy-Dashboard-dropFilesHereHint {
+        border: none;
+        padding-top: 0;
+    }
+    [data-uppy-drag-drop-supported=true] .uppy-Dashboard-AddFiles {
+        border: none;
+    }
+    .uppy-Dashboard-AddFiles-title {
+        color: var(--bs-body-color);
+        .uppy-Dashboard-browse {
+            color: var(--bs-secondary);
+        }
+    }
+}
+
+.payments-container{
+    padding: 1.25rem 1.875rem;
+    .payments-show-list{
+        i{
+            transition: all .3s ease-in-out;
+        }
+        &[aria-expanded="true"]{
+            i{
+                transform: scale(-1);
+            }
+        } 
+    }
+}
+.booking-payment-method{
+    padding: 1.875rem;
+    .payment-method-items{
+        margin-bottom: 1.5rem;
+        &:last-child{
+            margin-bottom: 0;
+        }
+    }
+}
+
+// sweet alert popup payment sucessfully 
+.booking-sucssufully{
+    margin-top: 3.125rem;
+}
+
+@include media-breakpoint-down(md) {
+    .booking-sucssufully{
+        margin-top: 1.5rem;
+    }
+  }

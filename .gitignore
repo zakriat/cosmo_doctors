@@ -1,0 +1,39 @@
+# Laravel
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+
+# IDE
+/.idea
+/.vscode
+*.cache
+.DS_Store
+
+# Compiled / generated public assets (built by npm run build in Dockerfile)
+/public/vendor/
+/public/modules/
+/public/js/*.min.js
+/public/js/app.js
+/public/js/libs.js
+/public/js/backend*.js
+/public/js/setting*.js
+/public/js/appointment.min.js
+/public/js/enhanced-*.js
+/public/js/vue.min.js
+/public/mix-manifest.json
+/public/build/
+
+# Large zip archives — never commit these
+*.zip
+
+# Media library uploads (generated at runtime)
+/storage/media-library/

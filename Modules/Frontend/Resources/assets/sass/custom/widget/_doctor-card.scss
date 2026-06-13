@@ -1,0 +1,47 @@
+.doctor-card {
+    background: var(--bs-gray-900);
+    padding: 2rem 1rem;
+
+    .doctor-img {
+        img {
+            width: 5.625rem;
+            height: 5.625rem;
+            object-position: top;
+        }
+    }
+
+    .doctor-rate {
+        font-size: 0.625rem;
+        color: var(--bs-heading-color);
+    }
+
+    .doctor-available {
+        background: radial-gradient(48.21% 48.21% at 51.79% 53.57%, #BBE1B2 0%, #48D924 50%, #BBE1B2 100%);
+        height: .75rem;
+        width: .75rem;
+        border-radius: 50%;
+    }
+
+    .doctor-checkbox {
+        background-color: var(--bs-primary-bg-subtle);
+        border-color: var(--bs-primary-bg-subtle);
+        top: .75rem;
+        left: .75rem;
+
+        &:checked {
+            background-color: var(--bs-primary);
+            border-color: var(--bs-primary);
+        }
+    }
+
+    &:has(.form-check-input:checked) {
+        background: var(--bs-primary-bg-subtle);
+
+    }
+}
+
+.section-background {
+    .doctor-card {
+        background: var(--bs-body-bg);
+    }
+}

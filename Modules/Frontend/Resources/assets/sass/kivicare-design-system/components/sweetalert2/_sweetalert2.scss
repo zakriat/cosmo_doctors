@@ -1,0 +1,32 @@
+// sweet alert
+
+div:where(.swal2-container) div:where(.swal2-popup) {
+    background: var(--bs-gray-900) !important;
+  }
+  
+  div:where(.swal2-container) h2:where(.swal2-title) {
+    color: var(--bs-heading-color) !important;
+    font-size: 1.125rem !important;
+  }
+  div:where(.swal2-container) .swal2-html-container {
+    color: var(--bs-body-color) !important;
+    font-size: 0.875rem !important;
+    padding: 0.375rem 0 0 0 !important;
+  }
+  div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel) {
+    color: var(--bs-heading-color) !important;
+  }
+  div:where(.swal2-icon) {
+    margin: 3rem auto 1.5rem !important;
+  }
+  div:where(.swal2-container) button:where(.swal2-styled) {
+    margin: 1.5rem 1rem 0 1rem !important;
+  }
+  div:where(.swal2-container) div:where(.swal2-popup) {
+    padding: 0 0 3.125em !important;
+  }
+  
+  div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm) {
+    background-color: var(--bs-secondary) !important;
+    color: var(--bs-white) !important;
+  }

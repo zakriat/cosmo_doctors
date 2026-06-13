@@ -1,0 +1,134 @@
+body {
+  overflow-x: hidden;
+}
+
+html:has(.short-menu) {
+  scroll-padding-top: 5rem;
+}
+
+.section-bg {
+  background-color: var(--bs-gray-900);
+}
+
+.section-spacing {
+  padding: 5rem 0;
+}
+
+// app section
+.app-section {
+  .try-now {
+    position: absolute;
+    top: 1.687rem;
+    right: -4.813rem;
+  }
+  
+  .app-box-image{
+    padding-top: 5.625rem;
+    padding-bottom: 2rem;
+  
+    .app-images {
+      aspect-ratio: 2 / 2.5;
+    }
+  }
+}
+
+
+.app-section-btn {
+  img {
+    object-fit: cover;
+    min-width: 11.25rem;
+    height: 4.063rem;
+  }
+}
+
+.vector-title {
+  font-family: 'Kalam', serif;
+  color: var(--bs-heading-color);
+  font-size: 1.313rem;
+  line-height: 2.092rem;
+  text-transform: uppercase;
+}
+
+// contact us
+.iframe-map {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  line-height: 1;
+}
+
+.contact-card {
+  .contact-detial {
+    padding-top: 2.5rem;
+    padding-bottom: 3.75rem;
+  }
+
+  .contact-social {
+    li {
+      &:hover {
+        a {
+          background-color: var(--bs-secondary);
+        }
+      }
+
+      a {
+        position: relative;
+        width: 2rem;
+        height: 2rem;
+        line-height: 1.8rem;
+        border-radius: 50%;
+        display: inline-block;
+        text-align: center;
+        background-color: var(--bs-primary);
+
+        i {
+          color: var(--bs-white);
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+
+.feedback-box {
+  display: flex;
+  gap: 0.875rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  align-content: center;
+}
+
+.feedbox-list {
+  .feedback-item {
+    background: var(--bs-gray-500);
+    padding: 5px 20px;
+    border-radius: 50px;
+    transition: all 0.5s ease-in-out;
+
+    span {
+      color: var(--bs-primary);
+    }
+
+    &.active {
+      position: relative;
+      background: var(--bs-primary-bg-subtle);
+    }
+
+    .active-feedback-icon {
+      position: absolute;
+      top: -6px;
+      right: 0;
+      color: var(--bs-success);
+      font-size: 1.125rem;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .app-img-box{
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+  }
+}

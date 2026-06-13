@@ -1,0 +1,29 @@
+.services-card {
+    background: var(--bs-gray-900);
+
+    .services-img {
+        img {
+            aspect-ratio: 8/4.5;
+        }
+    }
+
+    .service-meta {
+        top: .5rem;
+        left: .5rem;
+
+        .service-meta-dentist {
+            background-color: var(--bs-gray-900);
+            color: var(--bs-secondary);
+        }
+    }
+    .service-duration{
+        i{
+            color: var(--bs-gray-600);
+        }
+    }
+}
+.section-background{
+    .services-card {
+        background: var(--bs-body-bg);
+    }
+}

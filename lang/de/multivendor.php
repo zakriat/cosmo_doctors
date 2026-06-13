@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'title' => 'Klinikadministrator',
+    'singular_title' => 'Klinikadministrator',
+    'lbl_profile_image' => 'Profilbild',
+    'lbl_first_name' => 'Vorname',
+    'lbl_last_name' => 'Nachname',
+    'lbl_Email' => 'E-Mail',
+    'lbl_phone_number' => 'Telefonnummer',
+    'lbl_gender' => 'Geschlecht',
+    'lbl_status' => 'Status',
+    'lbl_verification_status' => 'Verifizierungsstatus',
+    'lbl_blocked' => 'Blockiert',
+    'msg_verified' => 'Verifiziert',
+    'msg_unverified' => 'Muss verifiziert werden',
+    'lbl_action' => 'Aktion',
+    'lbl_date_of_birth' => 'Geburtsdatum',
+    'google_blocked' => 'Klinikadministrator wurde blockiert',
+    'google_unblocked' => 'Klinikadministrator wurde entsperrt',
+    'vendor_verify' => 'Klinikadministrator verifiziert',
+    'vendor_status' => 'Status des Klinikadministrators aktualisiert',
+    'vendor_delete' => 'Klinikadministrator erfolgreich gelöscht',
+    'lbl_select_system_service' => 'Systemdienst auswählen',
+    'new_vendor' => 'Klinikadministrator erfolgreich gespeichert',
+    'update_vendor' => 'Klinikadministrator erfolgreich aktualisiert',
+    'delete_vendor' => 'Klinikadministrator erfolgreich gelöscht',
+];

@@ -1,0 +1,15 @@
+.category-card {
+    padding: 2.5em 1em;
+    background: var(--bs-gray-900);
+
+    .category-img {
+        img {
+            width: 8.438rem;
+            height: 8.438rem;
+            object-fit: cover;
+        }
+    }
+    .category-content{
+        letter-spacing: 0.01em;
+    }
+}

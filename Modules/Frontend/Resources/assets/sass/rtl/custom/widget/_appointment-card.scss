@@ -1,0 +1,18 @@
+.appointments-card {
+
+    .appointments-badge {
+
+        .appointments-detail {
+
+            &::before {
+                margin-right: 0;
+                margin-left: -1rem;
+                right: auto;
+                left: 0;
+            }
+
+        }
+
+    }
+
+}

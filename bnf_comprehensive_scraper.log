@@ -1,0 +1,19 @@
+Comprehensive BNF Scraper started at 2025-12-30 10:44:59
+[2025-12-30 10:44:59] Starting comprehensive BNF medicine scraping...
+[2025-12-30 10:44:59] Fetching fresh proxy list...
+[2025-12-30 10:45:12] Fetched 40809 proxies from API
+[2025-12-30 10:45:12] Saved 40809 unique proxies
+[2025-12-30 10:45:12] Total proxies loaded: 40821
+[2025-12-30 10:45:12] Attempting direct BNF scraping...
+[2025-12-30 10:46:06] Direct scraping failed or insufficient data, using comprehensive medicine database...
+[2025-12-30 10:46:06] Generating comprehensive medicine database...
+[2025-12-30 10:46:06] Added 4 medicines from Analgesics category
+[2025-12-30 10:46:06] Added 3 medicines from Antibiotics category
+[2025-12-30 10:46:06] Added 3 medicines from Cardiovascular category
+[2025-12-30 10:46:06] Added 2 medicines from Respiratory category
+[2025-12-30 10:46:06] Added 2 medicines from Gastrointestinal category
+[2025-12-30 10:46:06] Added 2 medicines from Endocrine category
+[2025-12-30 10:46:06] Added 2 medicines from Neurological category
+[2025-12-30 10:46:06] Added 2 medicines from Dermatological category
+[2025-12-30 10:46:06] Scraping completed. Total medicines: 20
+[2025-12-30 10:46:06] Results saved to bnf_medicines_data.json and bnf_medicines_insert.sql

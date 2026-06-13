@@ -1,0 +1,119 @@
+.nav-tabs {
+    @include border-radius($nav-tabs-border-radius);
+    margin-bottom: .5rem;
+
+    .nav-link {
+        @include border-radius($nav-tabs-border-radius);
+    }
+}
+
+.nav-pills {
+    @include border-radius($nav-pills-border-radius);
+    margin-bottom: .5rem;
+}
+
+
+.appointments-steps-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    .appointments-step {
+        .appointments-step-inner {
+            color: inherit;
+        }
+
+        .step-counter {
+            height: 1.625rem;
+            width: 1.625rem;
+            line-height: 1.625rem;
+            flex-shrink: 0;
+            text-align: center;
+            background-color: var(--bs-gray-900);
+            border-radius: 50%;
+        }
+
+        .step-text {
+            font-weight: 600;
+        }
+
+        .line {
+            display: inline-block;
+            vertical-align: middle;
+            height: 2px;
+            width: 100%;
+            background-color: var(--bs-border-color);
+        }
+    }
+
+    .appointments-steps-item {
+        position: relative;
+        flex-grow: 1;
+
+        &:last-child {
+            flex-grow: inherit;
+            flex-shrink: 0;
+
+            .appointments-step {
+                .seprator {
+                    display: none;
+                }
+            }
+        }
+
+        &.complete {
+            .appointments-step {
+                .step-counter {
+                    background-color: var(--bs-success);
+                    color: var(--bs-white);
+                    font-size: 0;
+
+                    &::after {
+                        content: "\e182";
+                        font-family: "Phosphor";
+                        font-weight: normal;
+                        font-size: 16px;
+                    }
+                }
+
+                .step-text {
+                    color: var(--bs-heading-color);
+                }
+            }
+        }
+
+        &.active {
+            .appointments-step {
+                .step-counter {
+                    background-color: var(--bs-primary);
+                    color: var(--bs-white);
+                }
+
+                .step-text {
+                    color: var(--bs-primary);
+                }
+            }
+        }
+    }
+    
+}
+
+@include media-breakpoint-down(md) {
+    .appointments-steps-list {
+        .appointments-steps-item {
+            .seprator {
+                display: none;
+            }
+        }
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    .appointments-steps-list {
+        flex-direction: column;
+    }
+}

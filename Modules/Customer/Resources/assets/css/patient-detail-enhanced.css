@@ -1,0 +1,170 @@
+/* Enhanced Patient Detail Page Styles */
+
+.patient-overview-tab .nav-link {
+    border-radius: 50px;
+    padding: 12px 20px;
+    margin-right: 8px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.patient-overview-tab .nav-link:hover {
+    background-color: var(--bs-primary-bg-subtle);
+    color: var(--bs-primary);
+}
+
+.patient-overview-tab .nav-link.active {
+    background-color: var(--bs-primary);
+    color: white;
+    border-color: var(--bs-primary);
+}
+
+.patient-overview-tab .nav-link i {
+    margin-right: 8px;
+    font-size: 1.1em;
+}
+
+/* Timeline styles for encounters */
+.timeline {
+    position: relative;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--bs-border-color);
+}
+
+.timeline .card {
+    position: relative;
+    margin-left: 50px;
+}
+
+.timeline .card::before {
+    content: '';
+    position: absolute;
+    left: -38px;
+    top: 20px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--bs-primary);
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px var(--bs-border-color);
+}
+
+/* Card hover effects */
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+/* Status badges */
+.badge.bg-primary {
+    background-color: var(--bs-primary) !important;
+}
+
+.badge.bg-success {
+    background-color: var(--bs-success) !important;
+}
+
+.badge.bg-warning {
+    background-color: var(--bs-warning) !important;
+}
+
+.badge.bg-danger {
+    background-color: var(--bs-danger) !important;
+}
+
+.badge.bg-secondary-subtle {
+    background-color: var(--bs-secondary-bg-subtle) !important;
+    color: var(--bs-secondary) !important;
+}
+
+/* Filter section styling */
+.filter-section {
+    background-color: var(--bs-light);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+/* Table responsive enhancements */
+.table-responsive {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table th {
+    background-color: var(--bs-light);
+    border-bottom: 2px solid var(--bs-border-color);
+    font-weight: 600;
+}
+
+/* Accordion enhancements */
+.accordion-button:not(.collapsed) {
+    background-color: var(--bs-primary-bg-subtle);
+    color: var(--bs-primary);
+}
+
+.accordion-button::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+/* Loading spinner */
+.spinner-border {
+    color: var(--bs-primary);
+}
+
+/* Quick action buttons */
+.quick-actions .btn {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .patient-overview-tab {
+        flex-wrap: wrap;
+    }
+    
+    .patient-overview-tab .nav-link {
+        margin-bottom: 8px;
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+    
+    .timeline {
+        margin-left: 0;
+    }
+    
+    .timeline::before {
+        display: none;
+    }
+    
+    .timeline .card {
+        margin-left: 0;
+    }
+    
+    .timeline .card::before {
+        display: none;
+    }
+}
+
+/* Print styles */
+@media print {
+    .nav-pills,
+    .btn,
+    .filter-section {
+        display: none !important;
+    }
+    
+    .tab-content .tab-pane {
+        display: block !important;
+        opacity: 1 !important;
+    }
+}

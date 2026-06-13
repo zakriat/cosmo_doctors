@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/frontendsetting",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\FrontendSetting\\": "",
+            "Modules\\FrontendSetting\\App\\": "app/",
+            "Modules\\FrontendSetting\\Database\\Factories\\": "database/factories/",
+            "Modules\\FrontendSetting\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\FrontendSetting\\Tests\\": "tests/"
+        }
+    }
+}

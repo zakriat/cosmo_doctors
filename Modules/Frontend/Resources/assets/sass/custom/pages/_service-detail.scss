@@ -1,0 +1,15 @@
+.service-detail-inner {
+    .service-images {
+        aspect-ratio: 1/.6;
+    }
+}
+
+.service-detail-content {
+    padding: 1.25rem;
+
+    .service-duration {
+        i {
+            color: var(--bs-gray-600);
+        }
+    }
+}

@@ -1,0 +1,27 @@
+<?php
+return [
+    'lbl_razorpay' => 'Razorpay',
+    'lbl_secret_key' => 'Μυστικό Κλειδί',
+    'lbl_app_key' => 'Κλειδί Εφαρμογής',
+    'lbl_stripe' => 'Stripe',
+    'lbl_paystack' => 'Paystack',
+    'lbl_paypal' => 'Paypal',
+    'lbl_flutterwave' => 'Flutterwave',
+    'lbl_client_id' => 'Ταυτότητα Πελάτη',
+    'lbl_app_id' => 'Ταυτότητα Εφαρμογής',
+    'lbl_merchant_id' => 'Ταυτότητα Εμπόρου',
+    'lbl_salt_key' => 'Κλειδί Αλατιού',
+    'lbl_salt_index' => 'Δείκτης Αλατιού',
+    'cinet_siteid' => 'Ταυτότητα Ιστότοπου',
+    'cinet_apikey' => 'Κλειδί API',
+    'cinet_secretkey' => 'Μυστικό Κλειδί',
+    'sadad_id' => 'Ταυτότητα Sadad',
+    'sadad_key' => 'Κλειδί Sadad',
+    'sadad_domain' => 'Δικτυακός Τόπος Sadad',
+    'lbl_phone_pay' => 'PhonePe',
+    'lbl_airtel_money' => 'Χρήματα Airtel',
+    'lbl_midtrans' => 'Midtrans',
+    'lbl_cinet' => 'Cinet',
+    'lbl_sadad' => 'Sadad',
+];
+

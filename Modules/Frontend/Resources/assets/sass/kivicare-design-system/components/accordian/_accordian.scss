@@ -1,0 +1,27 @@
+.accordion {
+  .custom-accordion {
+    margin-bottom: 1.875rem;
+    background-color: var(--bs-gray-900);
+    padding: 1.25rem;
+    border: none;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .custom-accordion-button {
+      background-color: var(--bs-gray-900);
+      color: var(--bs-heading-color);
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+      font-weight: $font-weight-medium;
+      box-shadow: none;
+    }
+
+    .custom-accordion-body {
+      margin-top: 0.938rem;
+      font-size: .875rem;
+    }
+  }
+}
+

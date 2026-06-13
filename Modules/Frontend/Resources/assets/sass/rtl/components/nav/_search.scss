@@ -1,0 +1,63 @@
+header {
+    .right-panel {
+        .header-search {
+            .input-group {
+                left: 0;
+                right: auto;
+
+                .search-submit {
+                    padding-right: 1.125rem;
+                    padding-left: 0;
+                    border-top-right-radius: var(--bs-border-radius) !important;
+                    border-bottom-right-radius: var(--bs-border-radius) !important;
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                    
+                }
+
+                .form-control {
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                    border-top-left-radius: var(--bs-border-radius) !important;
+                    border-bottom-left-radius: var(--bs-border-radius) !important;
+                }
+            }
+        }
+    }
+}
+.search-box {
+    .custom-search-group {
+        .form-control {
+            padding-right: 1.5rem;
+            padding-left: 0;
+            border-left: var(--bs-border-width) solid var(--bs-border-color);
+            border-right: 0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: var(--bs-border-radius) !important;
+            border-bottom-left-radius: var(--bs-border-radius) !important;
+        
+        }
+        .input-group-text{
+            border-right: var(--bs-border-width) solid var(--bs-border-color);
+            border-left: 0;
+            border-top-right-radius: var(--bs-border-radius) !important;
+            border-bottom-right-radius: var(--bs-border-radius) !important;
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+
+            &+.form-control{
+                border-top-right-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
+                border-top-left-radius: var(--bs-border-radius) !important;
+                border-bottom-left-radius: var(--bs-border-radius) !important;
+            }
+        }
+
+    }
+
+    .clear-icon {
+        right: auto;
+        left: 10px;
+    }
+}

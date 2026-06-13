@@ -1,0 +1,13 @@
+{
+    "name": "Vital",
+    "alias": "vital",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Vital\\Providers\\VitalServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

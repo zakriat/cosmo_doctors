@@ -1,0 +1,38 @@
+.auth-container{
+    height: 100%;
+    min-height: 100vh;
+
+    .auth-card{
+        background-color: var(--bs-gray-900);
+        padding: 3.125rem 2.5rem;
+        border-radius: var(--bs-border-radius);
+        .auth-card-content{
+            .sign-in-btn{
+                flex: 1;
+            }
+        }
+    }
+    .google-btn{
+        background-color: var(--bs-body-bg);
+    }
+}
+
+.auth-card {
+    .logo-default {
+        .logo-normal {
+            display: block;
+        }
+
+        .logo-dark {
+            display: none;
+        }
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .auth-container{    
+        .auth-card{
+            padding: 1.875rem 1rem;
+        }
+    }
+}

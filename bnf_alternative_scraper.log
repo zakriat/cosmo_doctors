@@ -1,0 +1,11 @@
+Alternative BNF Scraper started at 2025-12-30 10:41:52
+[2025-12-30 10:41:52] Starting alternative BNF medicine scraping...
+[2025-12-30 10:41:52] Creating sample medicines from common UK drugs...
+[2025-12-30 10:41:52] Created 10 sample medicines
+[2025-12-30 10:41:52] Attempting to scrape from alternative sources...
+[2025-12-30 10:41:52] Added 2 medicine variations
+[2025-12-30 10:41:52] Added 2 antibiotics
+[2025-12-30 10:41:52] Added 2 cardiovascular medicines
+[2025-12-30 10:41:52] Added 2 respiratory medicines
+[2025-12-30 10:41:52] Scraping completed. Total medicines: 18
+[2025-12-30 10:41:52] Results saved to bnf_medicines_data.json and bnf_medicines_insert.sql

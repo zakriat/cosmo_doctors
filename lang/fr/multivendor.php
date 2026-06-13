@@ -1,0 +1,28 @@
+<?php
+
+return[
+    'title' => 'Administrateur de clinique',
+    'singular_title' => 'Administrateur de clinique',
+    'lbl_profile_image' => 'Image de profil',
+    'lbl_first_name' => 'Prénom',
+    'lbl_last_name' => 'Nom de famille',
+    'lbl_Email' => 'E-mail',
+    'lbl_phone_number' => 'Numéro de téléphone',
+    'lbl_gender' => 'Genre',
+    'lbl_status' => 'Statut',
+    'lbl_verification_status' => 'Statut de vérification',
+    'lbl_blocked' => 'Bloqué',
+    'msg_verified' => 'Vérifié',
+    'msg_unverified' => 'Non vérifié',
+    'lbl_action' => 'Action',
+    'lbl_date_of_birth' => 'Date de naissance',
+    'google_blocked' => 'L\'administrateur de la clinique a été bloqué',
+    'google_unblocked' => 'L\'administrateur de la clinique a été débloqué',
+    'vendor_verify' => 'Administrateur de clinique vérifié',
+    'vendor_status' => 'Statut de l\'administrateur de la clinique mis à jour',
+    'vendor_delete' => 'Administrateur de clinique supprimé avec succès',
+    'lbl_select_system_service' => 'Sélectionner un service système',
+    'new_vendor' => 'Nouvel administrateur de clinique enregistré avec succès',
+    'update_vendor' => 'Administrateur de clinique mis à jour avec succès',
+    'delete_vendor' => 'Administrateur de clinique supprimé avec succès',
+];
