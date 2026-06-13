@@ -5,14 +5,20 @@ WORKDIR /app
 
 COPY composer.json composer.lock ./
 
-# Install PHP deps (no dev, optimised autoloader)
 RUN composer install \
     --no-dev \
     --no-interaction \
     --no-progress \
-    --optimize-autoloader \
+    --no-scripts \
+    --no-autoloader \
     --ignore-platform-reqs
 
+COPY . .
+
+RUN composer dump-autoload \
+    --optimize \
+    --no-dev \
+    --no-scripts
 # ── Stage 2: Node / asset build ──────────────────────────────────────────────
 FROM node:20-alpine AS node-build
 
