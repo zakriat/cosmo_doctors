@@ -28,7 +28,7 @@ COPY package*.json ./
 RUN npm ci --silent
 
 COPY . .
-RUN npm run build
+RUN npm run production
 
 # ── Stage 3: Production image ─────────────────────────────────────────────────
 FROM php:8.2-apache
@@ -89,9 +89,7 @@ COPY . .
 COPY --from=composer-build /app/vendor ./vendor
 
 # Copy compiled frontend assets from stage 2
-COPY --from=node-build /app/public/build ./public/build
-COPY --from=node-build /app/public/js ./public/js
-COPY --from=node-build /app/public/css ./public/css
+COPY --from=node-build /app/public ./public
 
 # Fix permissions
 RUN chown -R www-data:www-data /var/www/html \
