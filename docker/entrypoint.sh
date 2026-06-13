@@ -44,8 +44,8 @@ php artisan module:enable Triage 2>/dev/null || true
 echo "==> Caching..."
 php artisan config:cache
 # php artisan route:cache
-php artisan view:cache
-php artisan event:cache
+# php artisan view:cache
+# php artisan event:cache
 
 # ── Storage symlink ───────────────────────────────────────────────────────────
 php artisan storage:link 2>/dev/null || true
