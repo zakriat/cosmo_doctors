@@ -14,6 +14,17 @@ if (process.env.MIX_PUBLIC_PATH !== null && process.env.MIX_PUBLIC_PATH !== unde
  */
 // icon fonts
 mix.copy('node_modules/@fortawesome/fontawesome-free/webfonts/*', 'public/webfonts')
+mix.copy('node_modules/jquery/dist/jquery.min.js', 'public/vendor/jquery/jquery.min.js')
+
+mix.copy(
+  'node_modules/datatables.net/js/jquery.dataTables.min.js',
+  'public/vendor/datatable/datatables.min.js'
+)
+
+mix.copy(
+  'node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css',
+  'public/vendor/datatable/datatables.min.css'
+)
 /**
  *
  * !Backend/Dashboard
