@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
-// use Illuminate\Support\Facades\URL;  // ← THIS LINE IS REQUIRED
+use Illuminate\Support\Facades\URL;  // ← THIS LINE IS REQUIRED
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -34,9 +34,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        // if (config('app.env') === 'production') {
-        // URL::forceScheme('https');
-        // }
+        if (config('app.env') === 'production') {
+        URL::forceScheme('https');
+        }
         
         Schema::defaultStringLength(191);
 
