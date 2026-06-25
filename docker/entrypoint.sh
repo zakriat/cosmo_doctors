@@ -48,7 +48,12 @@ php artisan config:cache
 # php artisan event:cache
 
 # ── Storage symlink ───────────────────────────────────────────────────────────
-php artisan storage:link 2>/dev/null || true
+# php artisan storage:link 2>/dev/null || true
+# ── Storage: remove symlink, use real directory instead ───────────────────────
+rm -rf /var/www/html/public/storage
+mkdir -p /var/www/html/public/storage
+cp -r /var/www/html/storage/app/public/. /var/www/html/public/storage/ 2>/dev/null || true
+chown -R www-data:www-data /var/www/html/public/storage
 
 # ── Fix permissions after cache ──────────────────────────────────────────────
 chown -R www-data:www-data /var/www/html/storage \
