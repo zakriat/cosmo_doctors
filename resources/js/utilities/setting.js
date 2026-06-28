@@ -53,26 +53,54 @@ export const updateSelectorClass = (selector, choices, value) => {
   }
 }
 
+// export const updateColorRootVar = (theme_scheme, theme_color, choices) => {
+//   const prefix = getRootVars('--prefix') || 'bs-'
+//   let newColors = {}
+//   let dark = false
+//   if (theme_scheme !== 'light' && theme_scheme !== 'auto') {
+//     dark = true
+//   }
+
+//   _.forEach(theme_color.colors, (value, key) => {
+//     key = key.replace('{{prefix}}', prefix)
+//     newColors = {
+//       ...newColors,
+//       ...getColorShadeTint(key, value, dark)
+//     }
+//   })
+//   setRootVariables(newColors)
+//   removeClass('body', choices)
+//   // addClass("body", [theme_color.value]);
+//   removeClass('body', theme_color.value)
+// }
+
 export const updateColorRootVar = (theme_scheme, theme_color, choices) => {
   const prefix = getRootVars('--prefix') || 'bs-'
-  let newColors = {}
   let dark = false
+
   if (theme_scheme !== 'light' && theme_scheme !== 'auto') {
     dark = true
   }
 
-  _.forEach(theme_color.colors, (value, key) => {
-    key = key.replace('{{prefix}}', prefix)
+  let newColors = {}
+
+  const hardcodedColors = {
+    [`--${prefix}primary`]: '#0040A2', 
+    [`--${prefix}secondary`]: '#E1342D' 
+  }
+
+  _.forEach(hardcodedColors, (value, key) => {
     newColors = {
       ...newColors,
       ...getColorShadeTint(key, value, dark)
     }
   })
+
   setRootVariables(newColors)
   removeClass('body', choices)
-  // addClass("body", [theme_color.value]);
   removeClass('body', theme_color.value)
 }
+
 
 export const updateDomValueBySetting = (setting, Choices) => {
   updateHtmlAttr({ prop: 'dir', value: setting.theme_scheme_direction.value })
