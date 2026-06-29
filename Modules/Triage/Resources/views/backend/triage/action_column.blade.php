@@ -1,7 +1,7 @@
 <div class="d-flex gap-2 align-items-center">
     @hasPermission('edit_triage')
     <a href="{{ route('backend.triage.show', $data->id) }}"
-       class="btn btn-soft-primary btn-sm"
+       class="btn btn-primary btn-sm"
        data-bs-toggle="tooltip"
        title="{{ __('messages.open') }}">
         <i class="ph ph-arrow-square-out"></i>
@@ -11,7 +11,7 @@
     @if($data->status !== 'closed')
     @hasPermission('edit_triage')
     <button type="button"
-            class="btn btn-soft-secondary btn-sm"
+            class="btn btn-primary btn-sm"
             onclick="closeTriage({{ $data->id }})"
             data-bs-toggle="tooltip"
             title="{{ __('triage.status_closed') }}">
