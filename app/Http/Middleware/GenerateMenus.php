@@ -72,8 +72,21 @@ class GenerateMenus
                 ]);
             }
 
-            // ── Triage: nurse sees flat link, admin sees parent menu ──────────
-            if (auth()->user()->hasRole('nurse')) {
+            // // ── Triage: nurse sees flat link, admin sees parent menu ──────────
+            // if (auth()->user()->hasRole('nurse')) {
+            //     $this->mainRoute($menu, [
+            //         'icon'       => 'ph ph-clipboard-text',
+            //         'title'      => __('triage.menu_title'),
+            //         'route'      => 'backend.triage.index',
+            //         'active'     => 'app/triage',
+            //         'permission' => ['view_triage_queue'],
+            //         'order'      => 0,
+            //     ]);
+            // }
+
+            
+            // ── Triage: nurse/doctor sees flat link, admin sees parent menu ──────────
+            if (auth()->user()->hasRole('nurse') || auth()->user()->hasRole('doctor')) {
                 $this->mainRoute($menu, [
                     'icon'       => 'ph ph-clipboard-text',
                     'title'      => __('triage.menu_title'),
@@ -83,6 +96,7 @@ class GenerateMenus
                     'order'      => 0,
                 ]);
             }
+
 
             if (auth()->user()->hasRole(['admin', 'demo_admin'])) {
                 $triageMenu = $this->parentMenu($menu, [
