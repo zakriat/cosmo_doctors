@@ -63,5 +63,11 @@ class TriagePermissionSeeder extends Seeder
         if ($receptionistRole) {
             $receptionistRole->givePermissionTo($receptionistPerms);
         }
+
+        // Doctor gets view only
+        $doctorRole = Role::where('name', 'doctor')->first();
+        if ($doctorRole) {
+            $doctorRole->givePermissionTo(['view_triage_queue']);
+        }
     }
 }
