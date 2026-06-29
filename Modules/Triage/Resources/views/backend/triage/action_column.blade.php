@@ -1,5 +1,4 @@
 <div class="d-flex gap-2 align-items-center">
-    <!-- @hasPermission('edit_triage') -->
     @hasPermission('view_triage_queue')
     <a href="{{ route('backend.triage.show', $data->id) }}"
        class="btn btn-primary btn-sm"
