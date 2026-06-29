@@ -15,7 +15,24 @@ use Yajra\DataTables\DataTables;
 
 class TriageController extends Controller
 {
-    public function __construct()
+    // public function __construct()
+    // {
+    //     $this->module_title = 'triage.menu_title';
+    //     $this->module_name  = 'triage';
+
+    //     view()->share([
+    //         'module_title' => $this->module_title,
+    //         'module_name'  => $this->module_name,
+    //         'module_icon'  => 'ph ph-clipboard-text',
+    //     ]);
+
+    //     $this->middleware(['permission:view_triage_queue'])->only('index', 'index_data');
+    //     $this->middleware(['permission:add_triage'])->only('store');
+    //     $this->middleware(['permission:edit_triage'])->only('update', 'show');
+    //     $this->middleware(['permission:escalate_triage'])->only('escalate');
+    // }
+
+        public function __construct()
     {
         $this->module_title = 'triage.menu_title';
         $this->module_name  = 'triage';
@@ -26,9 +43,9 @@ class TriageController extends Controller
             'module_icon'  => 'ph ph-clipboard-text',
         ]);
 
-        $this->middleware(['permission:view_triage_queue'])->only('index', 'index_data');
+        $this->middleware(['permission:view_triage_queue'])->only('index', 'index_data', 'show');
         $this->middleware(['permission:add_triage'])->only('store');
-        $this->middleware(['permission:edit_triage'])->only('update', 'show');
+        $this->middleware(['permission:edit_triage'])->only('update');
         $this->middleware(['permission:escalate_triage'])->only('escalate');
     }
 
