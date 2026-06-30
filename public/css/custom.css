@@ -30,4 +30,13 @@
     --bs-secondary-active-border:#003070 !important;
 }
 
+/* ── DataTable row hover — light blue ───────────────────────── */
+#datatable tbody tr:hover td,
+table.dataTable tbody tr:hover td {
+    background-color: #e8f4fd !important;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+
 
