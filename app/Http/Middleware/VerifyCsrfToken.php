@@ -11,7 +11,12 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array<int, string>
      */
+    // protected $except = [
+    //     'api/quick-booking/*',
+    // ];
     protected $except = [
-        'api/quick-booking/*',
+    'api/quick-booking/*',
+    'transcribe-audio',
+    'transcribe-audio-enhanced',
     ];
 }
