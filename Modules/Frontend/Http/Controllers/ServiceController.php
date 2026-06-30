@@ -356,9 +356,15 @@ class ServiceController extends Controller
             $startTime = microtime(true);
             
             // Store audio temporarily
+            // $audioFile = $request->file('audio');
+            // $audioPath = $audioFile->store(config('groq.temp_audio_path'));
+            // $fullPath = storage_path('app/' . $audioPath);
+
+            $tempDisk = 'local';
+    
             $audioFile = $request->file('audio');
-            $audioPath = $audioFile->store(config('groq.temp_audio_path'));
-            $fullPath = storage_path('app/' . $audioPath);
+            $audioPath = $audioFile->store(config('groq.temp_audio_path'), $tempDisk);
+            $fullPath = \Storage::disk($tempDisk)->path($audioPath);
             
             \Log::info('Groq audio transcription started', [
                 'original_name' => $audioFile->getClientOriginalName(),
@@ -412,7 +418,8 @@ class ServiceController extends Controller
             session()->push('pending_audio_ids', $audioTranscription->id);
             
             // Clean up temp file
-            \Storage::delete($audioPath);
+            // \Storage::delete($audioPath);
+            \Storage::disk($tempDisk)->delete($audioPath);
             
             \Log::info('Groq transcription completed', [
                 'transcription_id' => $audioTranscription->id,
@@ -458,7 +465,8 @@ class ServiceController extends Controller
             
             // Clean up temp file
             if (isset($audioPath)) {
-                \Storage::delete($audioPath);
+                // \Storage::delete($audioPath);
+                \Storage::disk($tempDisk)->delete($audioPath);
             }
             
             return response()->json([
