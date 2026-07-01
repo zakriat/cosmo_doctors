@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="auth-container" id="login"
-    style="background-image: url('{{ asset('img/frontend/auth-bg.png') }}'); background-position: center center; background-repeat: no-repeat;background-size: cover;">
+    style="background-image: url('{{ asset('img/frontend/auth1.jpg') }}'); background-position: center center; background-repeat: no-repeat;background-size: cover;">
     <div class="container h-100 min-vh-100">
         <div class="row h-100 min-vh-100 align-items-center">
             <div class="col-xl-4 col-lg-5 col-md-6 my-5">
