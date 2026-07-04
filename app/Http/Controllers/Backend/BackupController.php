@@ -382,102 +382,293 @@ class BackupController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function activityLogView($id)
-    {
+    // public function activityLogView($id)
+    // {
 
-        $html = '';
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
-        $$module_name_singular = ActivityLog::where('id', '=', $id)->first();
-        if (isset($$module_name_singular) && !empty($$module_name_singular)) {
-            $PropertiesData = !empty($$module_name_singular['properties']) ? json_decode($$module_name_singular['properties']) : NULL;
+    //     $html = '';
+    //     $module_title = $this->module_title;
+    //     $module_name = $this->module_name;
+    //     $module_path = $this->module_path;
+    //     $module_icon = $this->module_icon;
+    //     $module_model = $this->module_model;
+    //     $module_name_singular = Str::singular($module_name);
+    //     $$module_name_singular = ActivityLog::where('id', '=', $id)->first();
+    //     if (isset($$module_name_singular) && !empty($$module_name_singular)) {
+    //         $PropertiesData = !empty($$module_name_singular['properties']) ? json_decode($$module_name_singular['properties']) : NULL;
 
-            $newData = (isset($PropertiesData->attributes) && !empty($PropertiesData->attributes)) ? $PropertiesData->attributes : NULL;
-            $oldData = (isset($PropertiesData->old) && !empty($PropertiesData->old)) ? $PropertiesData->old : NULL;
+    //         $newData = (isset($PropertiesData->attributes) && !empty($PropertiesData->attributes)) ? $PropertiesData->attributes : NULL;
+    //         $oldData = (isset($PropertiesData->old) && !empty($PropertiesData->old)) ? $PropertiesData->old : NULL;
 
 
 
-            $html = '<div class="col-lg-12">';
+    //         $html = '<div class="col-lg-12">';
+    //         $html .= '<div class="row">';
+    //         $html .= '<div class="col-lg-6">';
+    //         $html .= '<h5>' . __('messages.new_data') . ' </h5> <hr>';
+    //         if (!empty($newData)) {
+    //             foreach ($newData as $key => $value) {
+    //                 if ($key == 'user_id' || $key == 'doctor_id' || $key == 'patient_id' || $key == 'otherpatient_id' || $key == 'created_by' || $key == 'updated_by' || $key == 'deleted_by') {
+    //                     $user = User::find($value);
+    //                     $html .= '<p> <span class="h6 m-0">' . ucwords(str_replace('_', ' ', $key)) . '</span> : ' . ($user ? $user->first_name . ' ' . $user->last_name : '-') . '</p>';
+    //                 } elseif ($key == 'reason') {
+
+    //                     $key = 'Cancellation Reason';
+
+    //                     $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . ($value) . '</p>';
+    //                 } elseif ($key == 'clinic_id') {
+    //                     $clinic = Clinics::find($value);
+    //                     $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . ($clinic ? $clinic->name : '-') . '</p>';
+    //                 } elseif ($key == 'service_id') {
+    //                     $service = ClinicsService::find($value);
+    //                     $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . ($service ? $service->name : '-') . '</p>';
+    //                 } elseif ($key == 'created_at' || $key == 'updated_at'  || $key == 'start_date_time') {
+    //                     $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . formatDate($value) . '</p>';
+    //                 } elseif ($key == 'appointment_time') {
+    //                     $setting = Setting::where('name', 'time_formate')->first();
+    //                     $timeformate = $setting ? $setting->val : 'h:i A';
+    //                     $formattedTime = $value ? Carbon::parse($value)->format($timeformate) : '';
+    //                     $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . $formattedTime . '</p>';
+    //                 } elseif ($key == 'appointment_date') {
+    //                     $setting = Setting::where('name', 'date_formate')->first();
+    //                     $dateformate = $setting ? $setting->val : 'Y-m-d';
+    //                     $formattedDate = $value ? Carbon::parse($value)->format($dateformate) : '';
+    //                     $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . $formattedDate . '</p>';
+    //                 } elseif ($key == 'start_video_link' || $key == 'tax_percentage' || $key == 'inclusive_tax') {
+    //                     $html .= '<p class="text-break"> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . $value . '</p>';
+    //                 } else {
+    //                     $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . $value . '</p>';
+    //                 }
+    //             }
+    //         }
+    //         $html .= '</div>';
+    //         $html .= '<div class="col-lg-6">';
+    //         $html .= '<h5>' . __('messages.old_data') . ' </h5> <hr>';
+    //         if (!empty($oldData)) {
+    //             foreach ($oldData as $key => $value) {
+    //                 if ($key == 'user_id' || $key == 'doctor_id' || $key == 'patient_id' || $key == 'otherpatient_id' || $key == 'created_by' || $key == 'updated_by' || $key == 'deleted_by') {
+    //                     $user = User::find($value);
+    //                     $html .= '<p> <span class="h6 m-0">' . ucwords(str_replace('_', ' ', $key)) . '</span> : ' . ($user ? $user->first_name . ' ' . $user->last_name : '-') . '</p>';
+    //                 } elseif ($key == 'clinic_id') {
+    //                     $clinic = Clinics::find($value);
+    //                     $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . ($clinic ? $clinic->name : '-') . '</p>';
+    //                 } elseif ($key == 'service_id') {
+    //                     $service = ClinicsService::find($value);
+    //                     $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . ($service ? $service->name : '-') . '</p>';
+    //                 } elseif ($key == 'created_at' || $key == 'updated_at' || $key == 'start_date_time') {
+    //                     $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . formatDate($value) . '</p>';
+    //                 } elseif ($key == 'appointment_time') {
+    //                     $setting = Setting::where('name', 'time_formate')->first();
+    //                     $timeformate = $setting ? $setting->val : 'h:i A';
+    //                     $formattedTime = $value ? Carbon::parse($value)->format($timeformate) : '';
+    //                     $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . $formattedTime . '</p>';
+    //                 } elseif ($key == 'appointment_date') {
+    //                     $setting = Setting::where('name', 'date_formate')->first();
+    //                     $dateformate = $setting ? $setting->val : 'Y-m-d';
+    //                     $formattedDate = $value ? Carbon::parse($value)->format($dateformate) : '';
+    //                     $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . $formattedDate . '</p>';
+    //                 } elseif ($key == 'start_video_link' || $key == 'tax_percentage') {
+    //                     $html .= '<p class="text-break"> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . $value . '</p>';
+    //                 } else {
+    //                     $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . $value . '</p>';
+    //                 }
+    //             }
+    //         }
+    //         $html .= '</div>';
+    //         $html .= '</div>';
+    //         $html .= '</div>';
+    //     }
+
+    //     return $html;
+    // }
+
+     public function activityLogView($id)
+{
+    $activity = ActivityLog::where('id', $id)->first();
+
+    if (!$activity) {
+        return '<div class="alert alert-warning">Activity log not found.</div>';
+    }
+
+    $properties = !empty($activity->properties)
+        ? json_decode($activity->properties)
+        : null;
+
+    $newData = $properties->attributes ?? null;
+    $oldData = $properties->old ?? null;
+
+    $formatLabel = function ($key) {
+        $labels = [
+            'user_id' => 'Patient',
+            'patient_id' => 'Patient',
+            'otherpatient_id' => 'Other Patient',
+            'doctor_id' => 'Doctor',
+            'clinic_id' => 'Clinic',
+            'service_id' => 'Service',
+            'appointment_id' => 'Appointment',
+            'created_by' => 'Created By',
+            'updated_by' => 'Updated By',
+            'deleted_by' => 'Deleted By',
+            'appointment_date' => 'Appointment Date',
+            'appointment_time' => 'Appointment Time',
+            'appointment_extra_info' => 'Medical History',
+            'status' => 'Status',
+            'reason' => 'Cancellation Reason',
+        ];
+
+        return $labels[$key] ?? ucwords(str_replace('_', ' ', $key));
+    };
+
+    $formatValue = function ($key, $value) {
+        if ($value === null || $value === '') {
+            return '-';
+        }
+
+        if (is_array($value) || is_object($value)) {
+            return '<pre class="mb-0 text-break small">' . e(json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)) . '</pre>';
+        }
+
+        if (in_array($key, ['user_id', 'patient_id', 'otherpatient_id', 'doctor_id', 'created_by', 'updated_by', 'deleted_by'])) {
+            $user = User::find($value);
+            return $user ? e(trim($user->first_name . ' ' . $user->last_name)) : '-';
+        }
+
+        if ($key === 'nurse_id') {
+            $user = User::find($value);
+            return $user ? e(trim($user->first_name . ' ' . $user->last_name)) : e($value);
+        }
+
+        if ($key === 'clinic_id') {
+            $clinic = Clinics::find($value);
+            return $clinic ? e($clinic->name) : '-';
+        }
+
+        if ($key === 'service_id' || $key === 'redirect_service') {
+            $service = ClinicsService::find($value);
+            return $service ? e($service->name) : e($value);
+        }
+
+        if (in_array($key, ['created_at', 'updated_at', 'deleted_at', 'start_date_time'])) {
+            return $value ? e(formatDate($value)) : '-';
+        }
+
+        if ($key === 'appointment_date') {
+            $setting = Setting::where('name', 'date_formate')->first();
+            $dateformate = $setting ? $setting->val : 'd/m/Y';
+            return $value ? e(Carbon::parse($value)->format($dateformate)) : '-';
+        }
+
+        if ($key === 'appointment_time') {
+            $setting = Setting::where('name', 'time_formate')->first();
+            $timeformate = $setting ? $setting->val : 'h:i A';
+            return $value ? e(Carbon::parse($value)->format($timeformate)) : '-';
+        }
+
+        if (is_bool($value)) {
+            return $value ? 'Yes' : 'No';
+        }
+
+        if ($value === 1 || $value === '1') {
+            return 'Yes';
+        }
+
+        if ($value === 0 || $value === '0') {
+            return 'No';
+        }
+
+        return e((string) $value);
+    };
+
+    $subjectType = class_basename($activity->subject_type ?? '');
+    $subjectId = $activity->subject_id ?? null;
+    $causer = $activity->causer ?? null;
+
+    $actorName = '-';
+    if ($causer) {
+        $actorName = trim(($causer->first_name ?? '') . ' ' . ($causer->last_name ?? '')) ?: ($causer->name ?? '-');
+    } elseif (!empty($newData->updated_by ?? null)) {
+        $user = User::find($newData->updated_by);
+        $actorName = $user ? trim($user->first_name . ' ' . $user->last_name) : '-';
+    } elseif (!empty($newData->created_by ?? null)) {
+        $user = User::find($newData->created_by);
+        $actorName = $user ? trim($user->first_name . ' ' . $user->last_name) : '-';
+    }
+
+    $changedData = [];
+
+    if (!empty($newData)) {
+        foreach ($newData as $key => $newValue) {
+            $oldValue = $oldData->{$key} ?? null;
+
+            $newCompare = is_array($newValue) || is_object($newValue) ? json_encode($newValue) : (string) $newValue;
+            $oldCompare = is_array($oldValue) || is_object($oldValue) ? json_encode($oldValue) : (string) $oldValue;
+
+            if ($oldCompare !== $newCompare) {
+                $changedData[$key] = [
+                    'old' => $oldValue,
+                    'new' => $newValue,
+                ];
+            }
+        }
+    }
+
+    $html = '<div class="col-lg-12">';
+
+    $html .= '<div class="alert alert-light border mb-4">';
+    $html .= '<h5 class="mb-2">Activity Summary</h5>';
+    $html .= '<p class="mb-1"><strong>User:</strong> ' . e($actorName) . '</p>';
+    $html .= '<p class="mb-1"><strong>Action:</strong> ' . e(ucwords(str_replace('_', ' ', $activity->description ?? '-'))) . '</p>';
+    $html .= '<p class="mb-1"><strong>Record:</strong> ' . e($subjectType ?: '-') . ($subjectId ? ' #' . e($subjectId) : '') . '</p>';
+    $html .= '<p class="mb-0"><strong>Time:</strong> ' . e(formatDate($activity->created_at)) . '</p>';
+    $html .= '</div>';
+
+    if (!empty($changedData)) {
+        $html .= '<div class="card mb-4">';
+        $html .= '<div class="card-header"><h5 class="mb-0">Changed Fields</h5></div>';
+        $html .= '<div class="card-body">';
+
+        foreach ($changedData as $key => $change) {
+            $html .= '<div class="mb-3 pb-3 border-bottom">';
+            $html .= '<div class="fw-bold mb-1">' . e($formatLabel($key)) . '</div>';
             $html .= '<div class="row">';
-            $html .= '<div class="col-lg-6">';
-            $html .= '<h5>' . __('messages.new_data') . ' </h5> <hr>';
-            if (!empty($newData)) {
-                foreach ($newData as $key => $value) {
-                    if ($key == 'user_id' || $key == 'doctor_id' || $key == 'patient_id' || $key == 'otherpatient_id' || $key == 'created_by' || $key == 'updated_by' || $key == 'deleted_by') {
-                        $user = User::find($value);
-                        $html .= '<p> <span class="h6 m-0">' . ucwords(str_replace('_', ' ', $key)) . '</span> : ' . ($user ? $user->first_name . ' ' . $user->last_name : '-') . '</p>';
-                    } elseif ($key == 'reason') {
-
-                        $key = 'Cancellation Reason';
-
-                        $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . ($value) . '</p>';
-                    } elseif ($key == 'clinic_id') {
-                        $clinic = Clinics::find($value);
-                        $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . ($clinic ? $clinic->name : '-') . '</p>';
-                    } elseif ($key == 'service_id') {
-                        $service = ClinicsService::find($value);
-                        $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . ($service ? $service->name : '-') . '</p>';
-                    } elseif ($key == 'created_at' || $key == 'updated_at'  || $key == 'start_date_time') {
-                        $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . formatDate($value) . '</p>';
-                    } elseif ($key == 'appointment_time') {
-                        $setting = Setting::where('name', 'time_formate')->first();
-                        $timeformate = $setting ? $setting->val : 'h:i A';
-                        $formattedTime = $value ? Carbon::parse($value)->format($timeformate) : '';
-                        $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . $formattedTime . '</p>';
-                    } elseif ($key == 'appointment_date') {
-                        $setting = Setting::where('name', 'date_formate')->first();
-                        $dateformate = $setting ? $setting->val : 'Y-m-d';
-                        $formattedDate = $value ? Carbon::parse($value)->format($dateformate) : '';
-                        $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . $formattedDate . '</p>';
-                    } elseif ($key == 'start_video_link' || $key == 'tax_percentage' || $key == 'inclusive_tax') {
-                        $html .= '<p class="text-break"> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . $value . '</p>';
-                    } else {
-                        $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . $value . '</p>';
-                    }
-                }
-            }
-            $html .= '</div>';
-            $html .= '<div class="col-lg-6">';
-            $html .= '<h5>' . __('messages.old_data') . ' </h5> <hr>';
-            if (!empty($oldData)) {
-                foreach ($oldData as $key => $value) {
-                    if ($key == 'user_id' || $key == 'doctor_id' || $key == 'patient_id' || $key == 'otherpatient_id' || $key == 'created_by' || $key == 'updated_by' || $key == 'deleted_by') {
-                        $user = User::find($value);
-                        $html .= '<p> <span class="h6 m-0">' . ucwords(str_replace('_', ' ', $key)) . '</span> : ' . ($user ? $user->first_name . ' ' . $user->last_name : '-') . '</p>';
-                    } elseif ($key == 'clinic_id') {
-                        $clinic = Clinics::find($value);
-                        $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . ($clinic ? $clinic->name : '-') . '</p>';
-                    } elseif ($key == 'service_id') {
-                        $service = ClinicsService::find($value);
-                        $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . ($service ? $service->name : '-') . '</p>';
-                    } elseif ($key == 'created_at' || $key == 'updated_at' || $key == 'start_date_time') {
-                        $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . formatDate($value) . '</p>';
-                    } elseif ($key == 'appointment_time') {
-                        $setting = Setting::where('name', 'time_formate')->first();
-                        $timeformate = $setting ? $setting->val : 'h:i A';
-                        $formattedTime = $value ? Carbon::parse($value)->format($timeformate) : '';
-                        $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . $formattedTime . '</p>';
-                    } elseif ($key == 'appointment_date') {
-                        $setting = Setting::where('name', 'date_formate')->first();
-                        $dateformate = $setting ? $setting->val : 'Y-m-d';
-                        $formattedDate = $value ? Carbon::parse($value)->format($dateformate) : '';
-                        $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . $formattedDate . '</p>';
-                    } elseif ($key == 'start_video_link' || $key == 'tax_percentage') {
-                        $html .= '<p class="text-break"> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . $value . '</p>';
-                    } else {
-                        $html .= '<p> <span class="h6 m-0"> ' . ucwords(str_replace('_', ' ', $key)) . ' </span> : ' . $value . '</p>';
-                    }
-                }
-            }
-            $html .= '</div>';
+            $html .= '<div class="col-md-6"><small class="text-muted">Old</small><div class="text-danger">' . $formatValue($key, $change['old']) . '</div></div>';
+            $html .= '<div class="col-md-6"><small class="text-muted">New</small><div class="text-success">' . $formatValue($key, $change['new']) . '</div></div>';
             $html .= '</div>';
             $html .= '</div>';
         }
 
-        return $html;
+        $html .= '</div>';
+        $html .= '</div>';
+    } else {
+        $html .= '<div class="alert alert-info">No changed fields were found for this activity.</div>';
+    }
+
+    $html .= '<details class="mt-3">';
+    $html .= '<summary class="fw-bold">Show full technical data</summary>';
+    $html .= '<div class="row mt-3">';
+
+    $html .= '<div class="col-lg-6">';
+    $html .= '<h5>' . __('messages.new_data') . '</h5><hr>';
+    if (!empty($newData)) {
+        foreach ($newData as $key => $value) {
+            $html .= '<p class="text-break"><span class="h6 m-0">' . e($formatLabel($key)) . '</span> : ' . $formatValue($key, $value) . '</p>';
+        }
+    }
+    $html .= '</div>';
+
+    $html .= '<div class="col-lg-6">';
+    $html .= '<h5>' . __('messages.old_data') . '</h5><hr>';
+    if (!empty($oldData)) {
+        foreach ($oldData as $key => $value) {
+            $html .= '<p class="text-break"><span class="h6 m-0">' . e($formatLabel($key)) . '</span> : ' . $formatValue($key, $value) . '</p>';
+        }
+    }
+    $html .= '</div>';
+
+    $html .= '</div>';
+    $html .= '</details>';
+
+    $html .= '</div>';
+
+    return $html;
     }
 }
