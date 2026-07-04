@@ -639,6 +639,14 @@
                                     </small>
                                 </div>
 
+
+                                 <div class="mb-3">
+                            <label class="form-label">Upload medical records</label>
+                            <input type="file" id="medical-record-files" name="file_url[]" class="form-control"
+                                accept=".pdf,.png,.jpg,.jpeg" multiple>
+                            <small class="text-muted">Allowed: PDF, PNG, JPG, JPEG. Max 20MB each.</small>
+                            </div>
+
                                 {{-- Action Buttons --}}
                                 <div class="d-flex gap-2 justify-content-end">
                                     <button type="button" id="cancel-edit-btn" class="btn btn-outline-secondary">
@@ -649,6 +657,9 @@
                                     </button>
                                 </div>
                             </div>
+
+                           
+
                         </div>
                         @endif
                     </div>
@@ -1671,6 +1682,60 @@
             arrow.style.transform = 'rotate(180deg)'; // Rotate arrow down when collapsed
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const saveBtn = document.getElementById('save-medical-history-btn');
+
+    if (!saveBtn) return;
+
+    saveBtn.addEventListener('click', function () {
+        const formData = new FormData();
+
+        formData.append(
+            'appointment_extra_info',
+            document.getElementById('appointment_extra_info')?.value || ''
+        );
+
+        const files = document.getElementById('medical-record-files')?.files || [];
+
+        console.log('files selected:', files.length, files[0]);
+
+        for (let i = 0; i < files.length; i++) {
+            formData.append('file_url[]', files[i]);
+        }
+
+        (window.appointmentAudioIds || []).forEach(function (id) {
+            formData.append('audio_ids[]', id);
+        });
+
+        for (const pair of formData.entries()) {
+            console.log(pair[0], pair[1]);
+        }
+
+        fetch("{{ route('appointments.update-medical-history', $appointment->id) }}", {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire('Saved', data.message, 'success').then(() => {
+                    location.reload();
+                });
+            } else {
+                Swal.fire('Error', data.message || 'Could not save medical history', 'error');
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            Swal.fire('Error', 'Something went wrong while saving.', 'error');
+        });
+    });
+});
 </script>
 
 @endpush
