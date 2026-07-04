@@ -1427,7 +1427,26 @@ async function submitForm() {
   formData.append('selectedDoctorName', state.selectedDoctorName)
   formData.append('selectedServiceName', state.selectedServiceName)
   formData.append('transaction_type', state.selectedPaymentMethod)
-  formData.append('file_url', state.uploadedFiles[0]?.data)
+  // formData.append('file_url', state.uploadedFiles[0]?.data)
+  // Medical history
+    formData.append(
+        'appointment_extra_info',
+        document.getElementById('appointment_extra_info').value
+    );
+
+    // Upload every selected file
+    if (state.uploadedFiles && state.uploadedFiles.length) {
+        state.uploadedFiles.forEach(file => {
+            formData.append('file_url[]', file.data);
+        });
+    }
+
+    // Upload all recorded audio IDs
+    if (window.appointmentAudioIds && window.appointmentAudioIds.length) {
+        window.appointmentAudioIds.forEach(id => {
+            formData.append('audio_ids[]', id);
+        });
+    }
   formData.append('user_id', state.user_id)
   formData.append('status', state.status)
   formData.append('total_amount', state.totalAmount)
@@ -1452,6 +1471,7 @@ async function submitForm() {
       if (state.selectedPaymentMethod == 'cash' || state.selectedPaymentMethod == 'Wallet') {
         const paymentDetails = {
           doctorName: data.data.doctor_name || 'N/A',
+          doctorExpert: data.data.doctor_expert || '',
           clinicName: data.data.clinic_name || 'N/A',
           serviceName: data.data.servicename || data.data.service_name || data.data.serviceName || state.selectedServiceName || 'Service Name Not Available',
           appointmentDate: data.data.formate_appointment_date || 'N/A',
@@ -1501,13 +1521,16 @@ async function submitForm() {
                 </div>
                 <h5 class="my-3">Great, Appointment Successful!</h5>
                 <h6 class="text-center">
-                    <span class="text-body">Your appointment for</span> <strong>${paymentDetails.serviceName}</strong><br>
-                    <span class="text-body">with</span> <strong>Dr. ${paymentDetails.doctorName}</strong><span
-                        class="text-body"> at</span><br>
-                    <strong>${paymentDetails.clinicName}</strong>
-                    <span class="text-body">has been confirmed
-                        on </span><strong>${paymentDetails.appointmentDate} <span
-                            class="text-body">at</span> ${paymentDetails.appointmentTime}</strong>.
+                    ${(function() {
+                        const isGP = paymentDetails.serviceName.toLowerCase().includes('gp');
+                        const expert = (paymentDetails.doctorExpert || '').trim();
+                        const doctorDisplay = 'Dr. ' + paymentDetails.doctorName + ((!isGP && expert) ? ' ' + expert : '');
+                        const appointmentType = isGP ? 'private GP appointment' : 'private Specialist appointment';
+                        return `<span class="text-body">Your ${appointmentType} with</span> <strong>${doctorDisplay}</strong><br>
+                    <span class="text-body">at</span> <strong>Cosmo Doctors</strong><br>
+                    <span class="text-body">has been confirmed for</span>
+                    <strong>${paymentDetails.appointmentDate} <span class="text-body">at</span> ${paymentDetails.appointmentTime}</strong>.`;
+                    })()}
                 </h6>
                 <!-- Booking Info -->
                     <div class="bg-primary-subtle border-none rounded-3 p-3 my-5">
