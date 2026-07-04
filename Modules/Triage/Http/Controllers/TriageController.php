@@ -15,24 +15,7 @@ use Yajra\DataTables\DataTables;
 
 class TriageController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->module_title = 'triage.menu_title';
-    //     $this->module_name  = 'triage';
-
-    //     view()->share([
-    //         'module_title' => $this->module_title,
-    //         'module_name'  => $this->module_name,
-    //         'module_icon'  => 'ph ph-clipboard-text',
-    //     ]);
-
-    //     $this->middleware(['permission:view_triage_queue'])->only('index', 'index_data');
-    //     $this->middleware(['permission:add_triage'])->only('store');
-    //     $this->middleware(['permission:edit_triage'])->only('update', 'show');
-    //     $this->middleware(['permission:escalate_triage'])->only('escalate');
-    // }
-
-        public function __construct()
+    public function __construct()
     {
         $this->module_title = 'triage.menu_title';
         $this->module_name  = 'triage';
@@ -43,9 +26,9 @@ class TriageController extends Controller
             'module_icon'  => 'ph ph-clipboard-text',
         ]);
 
-        $this->middleware(['permission:view_triage_queue'])->only('index', 'index_data', 'show');
+        $this->middleware(['permission:view_triage_queue'])->only('index', 'index_data');
         $this->middleware(['permission:add_triage'])->only('store');
-        $this->middleware(['permission:edit_triage'])->only('update');
+        $this->middleware(['permission:edit_triage'])->only('update', 'show');
         $this->middleware(['permission:escalate_triage'])->only('escalate');
     }
 
@@ -259,12 +242,29 @@ class TriageController extends Controller
 
         $results = $query->latest()->limit(30)->get();
 
+        // return response()->json($results->map(fn($a) => [
+        //     'id'   => $a->id,
+        //     'text' => '#' . $a->id
+        //         . ' — ' . (optional($a->user)->full_name ?? '—')
+        //         . ' (' . (optional($a->clinicservice)->name ?? 'No service') . ')'
+        //        . ($a->appointment_date
+        //         ? ' · ' . \Carbon\Carbon::parse($a->appointment_date)->format(setting('date_formate') ?? 'd/m/Y')
+        //         : ''),
+        //                     // . ($a->appointment_date ? ' · ' . $a->appointment_date : ''),
+        
+        //     ]));
+
         return response()->json($results->map(fn($a) => [
-            'id'   => $a->id,
+            'id' => $a->id,
             'text' => '#' . $a->id
                 . ' — ' . (optional($a->user)->full_name ?? '—')
                 . ' (' . (optional($a->clinicservice)->name ?? 'No service') . ')'
-                . ($a->appointment_date ? ' · ' . $a->appointment_date : ''),
+                . ($a->appointment_date
+                    ? ' · ' . \Carbon\Carbon::parse($a->appointment_date)->format(setting('date_formate') ?? 'd/m/Y')
+                    : '')
+                . ($a->appointment_time
+                    ? ' at ' . \Carbon\Carbon::parse($a->appointment_time)->format(setting('time_formate') ?? 'h:i A')
+                    : ''),
         ]));
     }
 
