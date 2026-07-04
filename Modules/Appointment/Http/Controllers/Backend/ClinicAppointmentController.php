@@ -7,7 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\BodyChartSetting;
 use Illuminate\Http\RedirectResponse;
 use App\Models\User;
- 
+
+use Modules\Triage\Models\PatientTriage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Modules\Appointment\Models\AppointmentPatientBodychart;
@@ -455,9 +456,22 @@ class ClinicAppointmentController extends Controller
 
                 // return $date;
             })
+              ->addColumn('triage_status', function ($data) {
+                $triage = PatientTriage::where('appointment_id', $data->id)->latest()->first();
+
+                if (!$triage) {
+                    return '<span class="badge bg-secondary">Not Started</span>';
+                }
+
+                if ($triage->status === 'closed' || $triage->status === 'completed') {
+                    return '<span class="badge bg-success">Done</span>';
+                }
+
+                return '<span class="badge bg-warning text-dark">' . ucfirst(str_replace('_', ' ', $triage->status)) . '</span>';
+            })
 
 
-            ->rawColumns(['check', 'action', 'status', 'services', 'service_amount', 'start_date_time', 'id', 'payment_status', 'type'])
+            ->rawColumns(['triage_status','check', 'action', 'status', 'services', 'service_amount', 'start_date_time', 'id', 'payment_status', 'type'])
             ->orderColumns(['id'], '-:column $1')
             ->make(true);
         // Custom Fields For export
