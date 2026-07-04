@@ -249,13 +249,33 @@
                     searchable: true,
                     width: '10%'
                 },
-                {
-                    data: 'service_amount',
-                    name: 'service_amount',
-                    title: "{{ __('appointment.price') }}",
-                    orderable: true,
-                    searchable: true,
-                },
+                // {
+                //     data: 'service_amount',
+                //     name: 'service_amount',
+                //     title: "{{ __('appointment.price') }}",
+                //     orderable: true,
+                //     searchable: true,
+                // },
+
+                        
+            {
+                data: 'triage_status',
+                name: 'triage_status',
+                title: 'Triage',
+                orderable: false,
+                searchable: false,
+            },
+
+            @if(!auth()->user()->hasRole('doctor') && auth()->user()->user_type !== 'doctor')
+            {
+                data: 'service_amount',
+                name: 'service_amount',
+                title: "{{ __('appointment.price') }}",
+                orderable: true,
+                searchable: true,
+            },
+            @endif
+                        
                 @unless (auth()->user()->hasRole('doctor'))
                     {
                         data: 'doctor_id',
