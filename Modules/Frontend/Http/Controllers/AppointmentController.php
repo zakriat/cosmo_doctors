@@ -401,7 +401,91 @@ class AppointmentController extends Controller
      * Only allows patient to update their own appointment
      * Only allows updates before appointment is completed
      */
-    public function updateMedicalHistory(Request $request, $id)
+    // public function updateMedicalHistory(Request $request, $id)
+    // {
+    //     try {
+    //         $appointment = Appointment::findOrFail($id);
+            
+    //         // Authorization: Only the patient who owns the appointment can update
+    //         if (auth()->id() !== $appointment->user_id) {
+    //             return response()->json([
+    //                 'success' => false,
+    //                 'message' => 'Unauthorized. You can only update your own appointments.'
+    //             ], 403);
+    //         }
+            
+    //         // Check if appointment is completed or cancelled
+    //         if (in_array($appointment->status, ['checkout', 'cancelled'])) {
+    //             return response()->json([
+    //                 'success' => false,
+    //                 'message' => 'Cannot update medical history for completed or cancelled appointments.'
+    //             ], 400);
+    //         }
+            
+    //         // Validate input
+    //       $validated = $request->validate([
+    //             'appointment_extra_info' => 'nullable|string|max:10000',
+    //             'file_url.*' => 'nullable|file|mimes:pdf,png,jpg,jpeg|max:20480',
+    //             'audio_ids' => 'nullable|array',
+    //             'audio_ids.*' => 'integer',
+    //         ]);
+                        
+    //         // Update medical history
+    //         $appointment->appointment_extra_info = $validated['appointment_extra_info'];
+    //         $appointment->save();
+
+
+    //         if ($request->hasFile('file_url')) {
+    //             foreach ($request->file('file_url') as $file) {
+    //                 $appointment->addMedia($file)->toMediaCollection('file_url');
+    //             }
+    //         }
+
+    //         if ($request->filled('audio_ids')) {
+    //             \App\Models\AudioTranscription::whereIn('id', $request->audio_ids)
+    //                 ->where('user_id', auth()->id())
+    //                 ->update(['appointment_id' => $appointment->id]);
+    //         }
+                        
+    //         \Log::info('Medical history updated', [
+    //             'appointment_id' => $id,
+    //             'user_id' => auth()->id(),
+    //             'updated_at' => now()
+    //         ]);
+            
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Medical history updated successfully',
+    //             'appointment_extra_info' => $appointment->appointment_extra_info
+    //         ]);
+            
+    //     } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Appointment not found'
+    //         ], 404);
+            
+    //     } catch (\Illuminate\Validation\ValidationException $e) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Validation failed',
+    //             'errors' => $e->errors()
+    //         ], 422);
+            
+    //     } catch (\Exception $e) {
+    //         \Log::error('Error updating medical history', [
+    //             'appointment_id' => $id,
+    //             'error' => $e->getMessage()
+    //         ]);
+            
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'An error occurred while updating medical history'
+    //         ], 500);
+    //     }
+    // }
+
+       public function updateMedicalHistory(Request $request, $id)
     {
         try {
             $appointment = Appointment::findOrFail($id);
@@ -423,19 +507,36 @@ class AppointmentController extends Controller
             }
             
             // Validate input
-            $validated = $request->validate([
-                'appointment_extra_info' => 'required|string|max:10000'
+          $validated = $request->validate([
+                'appointment_extra_info' => 'nullable|string|max:10000',
+                'file_url.*' => 'nullable|file|mimes:pdf,png,jpg,jpeg|max:20480',
+                'audio_ids' => 'nullable|array',
+                'audio_ids.*' => 'integer',
             ]);
-            
+                        
             // Update medical history
             $appointment->appointment_extra_info = $validated['appointment_extra_info'];
             $appointment->save();
-            
+
+
+            if ($request->hasFile('file_url')) {
+                foreach ($request->file('file_url') as $file) {
+                    $appointment->addMedia($file)->toMediaCollection('file_url');
+                }
+            }
+
+            if ($request->filled('audio_ids')) {
+                \App\Models\AudioTranscription::whereIn('id', $request->audio_ids)
+                    ->where('user_id', auth()->id())
+                    ->update(['appointment_id' => $appointment->id]);
+            }
+                        
             \Log::info('Medical history updated', [
                 'appointment_id' => $id,
                 'user_id' => auth()->id(),
-                'updated_at' => now()
-            ]);
+                'updated_at' => now(),
+                'file_url' => $request->file('file_url'), 
+                       ]);
             
             return response()->json([
                 'success' => true,
@@ -468,6 +569,7 @@ class AppointmentController extends Controller
             ], 500);
         }
     }
+
 
     public function encounterList()
     {
@@ -838,6 +940,8 @@ class AppointmentController extends Controller
         $serviceData = $this->getServiceAmount($data['service_id'], $data['doctor_id'], $data['clinic_id']);
         $request['selectedServiceName'] = $request['selectedServiceName'] ?? $serviceData['service_name'];
         $data['doctor_name'] = optional($doctor->user)->full_name;
+        // $data['doctor_expert'] = optional($doctor->profile)->expert ?? '';
+        $data['doctor_expert'] = optional(optional($doctor->user)->profile)->expert ?? '';
         $data['user_id'] = auth()->user()->id;
         $data['service_name'] = $request['selectedServiceName'];
         $startDatetime = $data['appointment_date'] . ' ' . $data['appointment_time'];
@@ -2612,6 +2716,10 @@ class AppointmentController extends Controller
         $paymentDetails = [
             'message' => 'Great, Payment Successful!',
             'doctorName' => optional(optional($selectedDoctor)->user)->full_name,
+            'doctorExpert' => optional(optional($selectedDoctor)->profile)->expert ?? '',
+            'serviceName' => $paymentData['selectedServiceName']
+                ?? optional(\Modules\Clinic\Models\ClinicsService::find($paymentData['service_id'] ?? null))->name
+                ?? '',
             'clinicName' => optional($selectedClinic)->name,
             'appointmentDate' => $paymentData['appointment_date'] ?? '',
             'appointmentTime' => $paymentData['appointment_time'] ?? '',
