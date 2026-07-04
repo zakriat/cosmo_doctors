@@ -713,14 +713,34 @@
                             </h5>
                         </div>
                     </div>
-
                     <!-- Modal Body -->
                     <div class="modal-body heading-color">
+                        <!-- {{ dd($paymentDetails) }} -->
+                          <h1 style="color:red">TEST123</h1>
+                        @php
+                            $isGP = stripos($paymentDetails['serviceName'] ?? '', 'GP') !== false;
+                            $expert = trim($paymentDetails['doctorExpert'] ?? '');
+                            $doctorDisplay = 'Dr. ' . ($paymentDetails['doctorName'] ?? '');
+                            if (!$isGP && $expert) {
+                                $doctorDisplay .= ' ' . $expert;
+                            }
+                            $formattedDate = isset($paymentDetails['appointmentDate'])
+                                ? date('d F Y', strtotime($paymentDetails['appointmentDate']))
+                                : '';
+                            $formattedTime = isset($paymentDetails['appointmentTime'])
+                                ? date('h:i a', strtotime($paymentDetails['appointmentTime']))
+                                : '';
+                        @endphp
                         <p>
-                            Your appointment with <strong>Dr. {{ $paymentDetails['doctorName'] }}</strong> at
-                            <strong>{{ $paymentDetails['clinicName'] }}</strong> has been confirmed on
-                            <strong>{{ date('d M, Y', strtotime($paymentDetails['appointmentDate'])) }}</strong> at
-                            <strong>{{ date('h:i A', strtotime($paymentDetails['appointmentTime'])) }}</strong>.
+                            @if($isGP)
+                                Your private GP appointment with <strong>{{ $doctorDisplay }}</strong> at
+                                <strong>Cosmo Doctors</strong> has been confirmed for
+                                <strong>{{ $formattedDate }}</strong> at <strong>{{ $formattedTime }}</strong>.
+                            @else
+                                Your private Specialist appointment with <strong>{{ $doctorDisplay }}</strong> at
+                                <strong>Cosmo Doctors</strong> has been confirmed for
+                                <strong>{{ $formattedDate }}</strong> at <strong>{{ $formattedTime }}</strong>.
+                            @endif
                         </p>
                         <div class="mt-3 pt-3 border-top text-start">
                             <p><strong>Booking ID:</strong> <span
