@@ -102,8 +102,16 @@ class AppointmentDetailsController extends Controller
             $data = [
                 'appointment' => [
                     'id' => $appointment->id,
-                    'appointment_date' => $appointment->appointment_date,
-                    'appointment_time' => $appointment->appointment_time,
+                    // 'appointment_date' => $appointment->appointment_date,
+                    // 'appointment_time' => $appointment->appointment_time,
+                    'appointment_date' => $appointment->appointment_date
+                    ? \Carbon\Carbon::parse($appointment->appointment_date)->format(setting('date_formate') ?? 'd/m/Y')
+                    : '',
+
+                    'appointment_time' => $appointment->appointment_time
+                    ? \Carbon\Carbon::parse($appointment->appointment_time)->format(setting('time_formate') ?? 'h:i A')
+                    : '',
+                    
                     'start_date_time' => $appointment->start_date_time,
                     'duration' => $appointment->duration,
                     'status' => $appointment->status,
