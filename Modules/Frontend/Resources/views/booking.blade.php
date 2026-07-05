@@ -446,6 +446,11 @@
 
                                     <!-- Uppy Dashboard Container -->
                                     <div id="uppy-dashboard"></div>
+                                    <small class="text-muted d-block mt-2">
+                                        Allowed files: PDF, PNG, JPG, JPEG. Maximum size: 20MB.
+                                    </small>
+                                    <div id="medical-report-error" class="text-danger mt-2 d-none"></div>
+
 
                                     <!-- Display the selected file name -->
                                     <div id="file-info"></div>
