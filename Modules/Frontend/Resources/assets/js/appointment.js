@@ -1288,32 +1288,85 @@ function selectTimeSlot(time) {
 }
 
 //uppy
+// const uppy = new Uppy({
+//   restrictions: {
+//     maxFileSize: 20 * 1024 * 1024,
+//     maxNumberOfFiles: 3, // Only allow 1 file
+//     minNumberOfFiles: 1, // At least 1 file is required
+//     allowedFileTypes: ['.pdf', '.png', '.jpg', '.jpeg']
+
+//   },
+//   autoProceed: false // Don't automatically start upload, handle manually
+// }).use(window.Dashboard, {
+//   inline: true,
+//   target: '#uppy-dashboard',
+//   replaceTargetContent: true,
+//   showProgressDetails: true,
+//   height: 300,
+//   showLinkToFileUploadResult: false, // Hide the file upload result link
+//   showSelectedFiles: true, // Optionally hide the selected files section
+//   hideUploadButton: true // Hide the default upload button
+// })
+
+// // Handle the file added event (optional)
+// uppy.on('file-added', (file) => {
+
+//   state.uploadedFiles = []
+
+//   state.uploadedFiles.push(file)
+//   const fileObject = uppy.getFile(file.id) // Get the file object by ID
+// })
+
+// Uppy medical report upload
 const uppy = new Uppy({
   restrictions: {
-    maxFileSize: 1000000, // 1 MB file size limit
-    maxNumberOfFiles: 1, // Only allow 1 file
-    minNumberOfFiles: 1 // At least 1 file is required
+    maxFileSize: 20 * 1024 * 1024, // 20MB
+    maxNumberOfFiles: 3,
+    minNumberOfFiles: 0, // optional upload
+    allowedFileTypes: ['.pdf', '.png', '.jpg', '.jpeg']
   },
-  autoProceed: false // Don't automatically start upload, handle manually
+  autoProceed: false
 }).use(window.Dashboard, {
-  inline: true,
-  target: '#uppy-dashboard',
-  replaceTargetContent: true,
-  showProgressDetails: true,
-  height: 300,
-  showLinkToFileUploadResult: false, // Hide the file upload result link
-  showSelectedFiles: true, // Optionally hide the selected files section
-  hideUploadButton: true // Hide the default upload button
-})
+    inline: true,
+    target: '#uppy-dashboard',
+    replaceTargetContent: true,
+    showProgressDetails: true,
+    height: 300,
+    hideUploadButton: true,
+    showSelectedFiles: true,
+    showLinkToFileUploadResult: false,
+    proudlyDisplayPoweredByUppy: false,
+    note: 'Allowed: PDF, PNG, JPG, JPEG • Maximum 20MB each • Maximum 3 files'
+});
 
-// Handle the file added event (optional)
 uppy.on('file-added', (file) => {
+  if (!state.uploadedFiles) {
+    state.uploadedFiles = [];
+  }
 
-  state.uploadedFiles = []
+  state.uploadedFiles.push(file);
 
-  state.uploadedFiles.push(file)
-  const fileObject = uppy.getFile(file.id) // Get the file object by ID
-})
+  const errorBox = document.getElementById('medical-report-error');
+  if (errorBox) {
+    errorBox.textContent = '';
+    errorBox.classList.add('d-none');
+  }
+});
+
+uppy.on('file-removed', (file) => {
+  state.uploadedFiles = (state.uploadedFiles || []).filter(
+    uploadedFile => uploadedFile.id !== file.id
+  );
+});
+
+uppy.on('restriction-failed', (file, error) => {
+  const errorBox = document.getElementById('medical-report-error');
+
+  if (errorBox) {
+    errorBox.textContent = error?.message || 'Only PDF, PNG, JPG, JPEG files up to 20MB are allowed.';
+    errorBox.classList.remove('d-none');
+  }
+});
 
 document.querySelectorAll('input[name="payment_method"]').forEach((radio) => {
   radio.addEventListener('change', (event) => {
