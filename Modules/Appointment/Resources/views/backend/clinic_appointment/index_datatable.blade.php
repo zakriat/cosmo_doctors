@@ -249,23 +249,22 @@
                     searchable: true,
                     width: '10%'
                 },
-                // {
-                //     data: 'service_amount',
-                //     name: 'service_amount',
-                //     title: "{{ __('appointment.price') }}",
-                //     orderable: true,
-                //     searchable: true,
-                // },
 
-                        
-            {
+                    {
                 data: 'triage_status',
                 name: 'triage_status',
                 title: 'Triage',
                 orderable: false,
                 searchable: false,
             },
-
+               
+            // {
+            //     data: 'service_amount',
+            //     name: 'service_amount',
+            //     title: "{{ __('appointment.price') }}",
+            //     orderable: true,
+            //     searchable: true,
+            // },
             @if(!auth()->user()->hasRole('doctor') && auth()->user()->user_type !== 'doctor')
             {
                 data: 'service_amount',
@@ -275,7 +274,13 @@
                 searchable: true,
             },
             @endif
-                        
+                // {
+                //     data: 'service_amount',
+                //     name: 'service_amount',
+                //     title: "{{ __('appointment.price') }}",
+                //     orderable: true,
+                //     searchable: true,
+                // },
                 @unless (auth()->user()->hasRole('doctor'))
                     {
                         data: 'doctor_id',
@@ -827,12 +832,28 @@
                                             <source src="${recording.url}" type="audio/wav">
                                             Your browser does not support the audio element.
                                         </audio>
-                                        ${recording.transcription ? `
-                                            <div class="mt-2">
-                                                <small class="text-muted">Transcription:</small>
-                                                <p class="mb-0">${recording.transcription}</p>
-                                            </div>
-                                        ` : ''}
+                                     ${recording.transcription ? `
+                                        <div class="mt-2">
+                                            <small class="text-muted">Transcription:</small>
+
+                                            ${(() => {
+                                                const highlighted = highlightMedicalTerms(recording.transcription);
+
+                                                return `
+                                                    <div class="medical-history-text mb-2">
+                                                        ${highlighted.html}
+                                                    </div>
+
+                                                    <div class="d-flex flex-wrap gap-2 mb-2">
+                                                        <span class="badge bg-danger text-white">Symptoms: ${highlighted.counts.Symptoms || 0}</span>
+                                                        <span class="badge bg-warning text-dark">Allergies: ${highlighted.counts.Allergies || 0}</span>
+                                                        <span class="badge bg-info text-white">Medications: ${highlighted.counts.Medications || 0}</span>
+                                                        <span class="badge bg-success text-white">Triggers: ${highlighted.counts.Triggers || 0}</span>
+                                                    </div>
+                                                `;
+                                            })()}
+                                        </div>
+                                    ` : ''}
                                     </div>
                                 `).join('')}
                             </div>
@@ -899,6 +920,59 @@
             const i = Math.floor(Math.log(bytes) / Math.log(k));
             return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
         }
+
+       function highlightMedicalTerms(text) {
+    if (!text) {
+        return {
+            html: '',
+            counts: {}
+        };
+    }
+
+    let safeText = String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+    const categories = {
+        Symptoms: {
+            className: 'bg-danger text-white',
+            words: ['pain', 'ache', 'fever', 'cough', 'bleeding', 'swelling', 'vomiting', 'nausea', 'dizziness', 'headache', 'tooth', 'teeth', 'sensitive', 'sensitivity']
+        },
+        Allergies: {
+            className: 'bg-warning text-dark',
+            words: ['allergy', 'allergic', 'rash', 'reaction']
+        },
+        Medications: {
+            className: 'bg-info text-white',
+            words: ['medicine', 'medication', 'antibiotic', 'tablet', 'numbing', 'solution']
+        },
+        Triggers: {
+            className: 'bg-success text-white',
+            words: ['hot', 'cold', 'drink', 'eating']
+        }
+    };
+
+    const counts = {};
+
+    Object.entries(categories).forEach(([categoryName, category]) => {
+        counts[categoryName] = 0;
+
+        category.words.forEach(word => {
+            const regex = new RegExp(`\\b(${word})\\b`, 'gi');
+
+            safeText = safeText.replace(regex, function(match) {
+                counts[categoryName]++;
+                return `<span class="badge ${category.className} mx-1">${match}</span>`;
+            });
+        });
+    });
+
+    return {
+        html: safeText,
+        counts
+    };
+}
         </script>
 
     @endpush
