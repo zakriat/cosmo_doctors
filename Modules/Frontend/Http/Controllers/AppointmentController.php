@@ -1056,6 +1056,15 @@ class AppointmentController extends Controller
             }
         }
 
+        try {
+                app(\App\Services\CrmNotificationService::class)->appointmentBooked($data);
+            } catch (\Throwable $e) {
+                \Log::error('WhatsApp appointment notification failed', [
+                    'appointment_id' => $data->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+
         // $this->savePayment($paymentData);
         $paymentMethod = $request->input('transaction_type');
         $price = $paymentData['payble_amount'];
