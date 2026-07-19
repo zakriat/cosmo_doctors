@@ -90,6 +90,32 @@
             </div>
         </div>
 
+          <!-- gmc -->
+        
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="gmc_number" class="form-label">
+                    GMC Number
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control @error('gmc_number') is-invalid @enderror"
+                    id="gmc_number"
+                    name="gmc_number"
+                    value="{{ old('gmc_number', $doctor->gmc_number ?? '') }}"
+                    placeholder="Enter GMC number"
+                    maxlength="30"
+                >
+
+                @error('gmc_number')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+        </div>
+
         {{-- Contact Number --}}
         <div class="col-md-6">
             <div class="mb-3">
