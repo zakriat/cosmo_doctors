@@ -1178,6 +1178,9 @@ class DoctorController extends Controller
         $data['instagram_link'] = optional($data->profile)->instagram_link ?? null;
         $data['twitter_link'] = optional($data->profile)->twitter_link ?? null;
         $data['dribbble_link'] = optional($data->profile)->dribbble_link ?? null;
+        // $data['gmc_number'] = optional($data->profile)->gmc_number ?? null;
+
+        
     
         // Doctor info
         $data['experience'] = optional($data->doctor)->experience ?? null;
@@ -1196,6 +1199,8 @@ class DoctorController extends Controller
         // Email
         $data['email'] = $data->email ?? null;
         $data['doctor_email'] = $data->email ?? null;
+        $data['gmc_number'] = $data->gmc_number ?? null; // ✅ correct
+
     // dd($data['doctor_email']);
         return response()->json([
             'status' => true,
@@ -1385,6 +1390,7 @@ class DoctorController extends Controller
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
+            'gmc_number'  => 'nullable|string|max:255',
             'doctor_email' => [
                 'required',
                 'string',
@@ -1412,6 +1418,12 @@ class DoctorController extends Controller
 
         $data = User::role(['doctor'])->findOrFail($id);
         $request_data = $request->except(['profile_image', 'password', 'remove_profile_image']);
+
+        // Preserve gmc_number if not sent / empty
+        if (!$request->filled('gmc_number')) {
+            unset($request_data['gmc_number']);
+        }
+
         $request_data['mobile'] = str_replace(' ', '', $request_data['mobile']);
         
         // Handle custom state/city entries with duplicate prevention
@@ -1453,6 +1465,7 @@ class DoctorController extends Controller
             'instagram_link'=> $request->instagram_link,
             'twitter_link'  => $request->twitter_link,
             'dribbble_link' => $request->dribbble_link,
+            // 'gmc_number' => $request->gmc_number
         ];
         $data->profile()->updateOrCreate([], $profile);
 
@@ -1476,7 +1489,8 @@ class DoctorController extends Controller
         $doctor->fill([
             'doctor_id'  => $data->id,
             'experience' => $request->experience,
-            'signature'  => $request->signature,
+            // 'signature'  => $request->signature,
+            'signature'  => $request->filled('signature') ? $request->signature : $doctor->signature,
             'vendor_id'  => $request->vendor_id,
         ])->save();
 
