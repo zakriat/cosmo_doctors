@@ -143,6 +143,10 @@
                         <li><b>{{ __('appointment.address') }}:</b>{{ $data['user']['address'] ?? '--' }}</li>
                         <li><b>{{ __('appointment.lbl_clinic_name') }}:</b> {{ $data['clinic']['name'] ?? '--' }}</li>
                         <li><b>{{ __('appointment.lbl_doctor_name') }}:</b> Dr.{{ $data['doctor']['first_name'] . ' ' . $data['doctor']['last_name'] ?? '--' }}</li>
+                          <li>
+                            <b>GMC Number:</b>
+                            {{ optional($data->doctor)->gmc_number ?? '--' }}
+                        </li>
                         <li><b>{{ __('appointment.lbl_description') }}:</b> {{ $data['description'] ?? '--' }}</li>
                     </ul>
                 </div>
