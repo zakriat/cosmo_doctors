@@ -955,8 +955,63 @@ class AppointmentController extends Controller
         $data['status'] = $data['status'] ? $data['status'] : 'confirmed';
         $data['advance_payment_status'] = $request->input('advance_payment_status');
         $service = ClinicsService::where('id', $data['service_id'])->first();
+
+
         $data['clinic_name'] = $service->ClinicServiceMapping->first()->center->name;
         $data['is_enable_advance_payment'] = $service->is_enable_advance_payment;
+
+        
+        /*
+|--------------------------------------------------------------------------
+| Clinic map and directions information
+|--------------------------------------------------------------------------
+*/
+
+$selectedClinic = Clinics::find($data['clinic_id']);
+
+$clinicName = $data['clinic_name'] ?? '';
+$clinicAddress = '';
+$clinicPhone = '';
+$mapUrl = '';
+$mapEmbedUrl = '';
+
+if ($selectedClinic) {
+    $clinicName = $selectedClinic->name ?? $clinicName;
+
+    $clinicAddress = collect([
+        $selectedClinic->address,
+        $selectedClinic->pincode,
+    ])->filter()->implode(', ');
+
+    $clinicPhone = $selectedClinic->contact_number ?? '';
+
+    $latitude = $selectedClinic->latitude;
+    $longitude = $selectedClinic->longitude;
+
+    // Use coordinates when available because they provide the exact location.
+    if (!empty($latitude) && !empty($longitude)) {
+        $destination = $latitude . ',' . $longitude;
+
+        $mapUrl = 'https://www.google.com/maps/dir/?api=1&destination=' .
+            urlencode($destination);
+
+        $mapEmbedUrl = 'https://www.google.com/maps?q=' .
+            urlencode($destination) .
+            '&output=embed';
+    } elseif (!empty($clinicAddress)) {
+        // Fall back to the clinic address.
+        $mapUrl = 'https://www.google.com/maps/dir/?api=1&destination=' .
+            urlencode($clinicAddress);
+
+        $mapEmbedUrl = 'https://www.google.com/maps?q=' .
+            urlencode($clinicAddress) .
+            '&output=embed';
+    }
+}
+
+$data['clinic_name'] = $clinicName;
+        
+
         $data['formate_appointment_date'] = DateFormate($data['appointment_date']);
         $data['appointment_extra_info' ] = $request->input('appointment_extra_info');
 
@@ -978,8 +1033,44 @@ class AppointmentController extends Controller
             $data['payment_status'] = 1;
             $data['payble_amount'] = $data['total_amount'];
         }
-        $paymentData = $data;
-        $data = Appointment::create($data);
+        // $paymentData = $data;
+        // $data = Appointment::create($data);
+
+        /*
+|--------------------------------------------------------------------------
+| Create appointment and prepare payment response
+|--------------------------------------------------------------------------
+*/
+
+// Preserve the original appointment/payment values.
+$appointmentData = $data;
+
+// Insert only the appointment fields into the database.
+$data = Appointment::create($appointmentData);
+
+// Add display-only map information to paymentData after the appointment
+// has been inserted.
+$paymentData = array_merge($appointmentData, [
+    'id' => $data->id,
+
+    'selectedServiceName' => $request->selectedServiceName,
+    'selectedDoctorName' => $request->selectedDoctorName,
+
+    'doctor_name' => optional($doctor->user)->full_name,
+    'doctor_expert' => optional(optional($doctor->user)->profile)->expert ?? '',
+
+    'service_name' => $request->selectedServiceName,
+    'clinic_name' => $clinicName,
+
+    'clinic_address' => $clinicAddress,
+    'clinic_phone' => $clinicPhone,
+    'map_url' => $mapUrl,
+    'map_embed_url' => $mapEmbedUrl,
+    'arrival_note' => 'Please arrive 10 minutes early.',
+
+    'currency_symbol' => $currencySymbol,
+]);
+
         $is_telemet = ClinicsService::where('id', $data['service_id'])->pluck('is_video_consultancy')->first();
         if ($is_telemet == 1) {
             $setting = Setting::where('name', 'google_meet_method')->orwhere('name', 'is_zoom')->first();
@@ -1056,14 +1147,14 @@ class AppointmentController extends Controller
             }
         }
 
-        try {
-                app(\App\Services\CrmNotificationService::class)->appointmentBooked($data);
-            } catch (\Throwable $e) {
-                \Log::error('WhatsApp appointment notification failed', [
-                    'appointment_id' => $data->id,
-                    'error' => $e->getMessage(),
-                ]);
-            }
+                try {
+            app(\App\Services\CrmNotificationService::class)->appointmentBooked($data);
+        } catch (\Throwable $e) {
+            \Log::error('WhatsApp appointment notification failed', [
+                'appointment_id' => $data->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
 
         // $this->savePayment($paymentData);
         $paymentMethod = $request->input('transaction_type');
@@ -2713,6 +2804,42 @@ class AppointmentController extends Controller
         $selectedDoctor = null;
         $doctorId = $paymentData['doctor_id'];
         $selectedClinic = Clinics::CheckMultivendor()->findOrFail($clinicId);
+
+                // Clinic location/contact information for the confirmation card
+        $clinicAddress = collect([
+            $selectedClinic->address,
+            $selectedClinic->pincode,
+        ])->filter()->implode(', ');
+
+        $clinicPhone = $selectedClinic->contact_number;
+        $clinicLatitude = $selectedClinic->latitude;
+        $clinicLongitude = $selectedClinic->longitude;
+
+        // Prefer coordinates because they point to the exact clinic location.
+        if (!empty($clinicLatitude) && !empty($clinicLongitude)) {
+            $mapDestination = $clinicLatitude . ',' . $clinicLongitude;
+
+            $mapUrl = 'https://www.google.com/maps/dir/?api=1&destination=' .
+                urlencode($mapDestination);
+
+            $mapEmbedUrl = 'https://www.google.com/maps?q=' .
+                urlencode($mapDestination) .
+                '&output=embed';
+        } elseif (!empty($clinicAddress)) {
+            // Fall back to the clinic address when coordinates are unavailable.
+            $mapUrl = 'https://www.google.com/maps/dir/?api=1&destination=' .
+                urlencode($clinicAddress);
+
+            $mapEmbedUrl = 'https://www.google.com/maps?q=' .
+                urlencode($clinicAddress) .
+                '&output=embed';
+        } else {
+            $mapUrl = '';
+            $mapEmbedUrl = '';
+        }
+
+        $arrivalNote = 'Please arrive 10 minutes early for check-in.';
+
         $selectedDoctor = Doctor::CheckMultivendor()->with('user')->where('doctor_id', $doctorId)->first();
         $doctorId = $selectedDoctor->id;
         $currentStep = 2;
@@ -2722,6 +2849,48 @@ class AppointmentController extends Controller
             ['index' => 1, 'label' => __('frontend.choose_doctors'), 'value' => 'Choose Doctors'],
             ['index' => 2, 'label' => __('frontend.choose_date_time_payment'), 'value' => 'Choose Date, Time, Payment'],
         ];
+
+//   $clinicAddress = collect([
+//     optional($selectedClinic)->address,
+//     optional($selectedClinic)->pincode,
+// ])->filter()->implode(', ');
+
+// $mapUrl = '';
+
+// if (
+//     !empty($selectedClinic->latitude) &&
+//     !empty($selectedClinic->longitude)
+// ) {
+//     $mapUrl = 'https://www.google.com/maps/dir/?api=1&destination=' .
+//         $selectedClinic->latitude . ',' .
+//         $selectedClinic->longitude;
+// }
+
+// $clinicPhone = optional($selectedClinic)->contact_number;
+
+                // / Build clinic address from fields available on the Clinics model
+        // $clinicAddress = collect([
+        //     optional($selectedClinic)->address,
+        //     optional($selectedClinic)->pincode,
+        // ])->filter()->implode(', ');
+
+        // $clinicPhone     = optional($selectedClinic)->contact_number;
+        // $clinicLatitude  = optional($selectedClinic)->latitude;
+        // $clinicLongitude = optional($selectedClinic)->longitude;
+
+        // // Prefer lat/long directions (accurate pin), fall back to address search
+        // if (!empty($clinicLatitude) && !empty($clinicLongitude)) {
+        //     $mapUrl = 'https://www.google.com/maps/dir/?api=1&destination=' .
+        //         $clinicLatitude . ',' . $clinicLongitude;
+        // } elseif (!empty($clinicAddress)) {
+        //     $mapUrl = 'https://www.google.com/maps/dir/?api=1&destination=' . urlencode($clinicAddress);
+        // } else {
+        //     $mapUrl = '';
+        // }
+
+        // // Arrival reminder for the confirmation card
+        // $arrivalNote = 'Please arrive 10 minutes early for check-in.';
+
         $paymentDetails = [
             'message' => 'Great, Payment Successful!',
             'doctorName' => optional(optional($selectedDoctor)->user)->full_name,
@@ -2738,6 +2907,41 @@ class AppointmentController extends Controller
             'paymentVia' => $paymentData['transaction_type'] ?? '',
             'totalAmount' => isset($amountTotal) ? number_format($amountTotal, 2) : '',
             'currency' => $currency ? $currency->currency_symbol : 'USD',
+
+            // 'patientName' => $appointment->user->first_name.' '.$appointment->user->last_name,
+
+            // 'clinicAddress' => $appointment->cliniccenter->address,
+
+            // 'postcode' => $appointment->cliniccenter->postcode,
+
+            // 'clinicPhone' => $appointment->cliniccenter->mobile,
+
+            // 'mapUrl' =>
+            // !empty($appointment->cliniccenter->latitude)
+            // &&
+            // !empty($appointment->cliniccenter->longitude)
+
+            // ? 'https://www.google.com/maps?q='.
+            // $appointment->cliniccenter->latitude.
+            // ','.
+            // $appointment->cliniccenter->longitude
+
+            // : 'https://www.google.com/maps/search/?api=1&query='.
+            // urlencode($appointment->cliniccenter->address),
+
+            // 'clinicAddress' => $clinicAddress,
+            // 'clinicPhone' => $clinicPhone,
+            // 'clinicLatitude' => $clinicLatitude,
+            // 'clinicLongitude' => $clinicLongitude,
+            // 'mapUrl' => $mapUrl,
+'clinicAddress' => $clinicAddress,
+'clinicPhone' => $clinicPhone,
+'clinicLatitude' => $clinicLatitude,
+'clinicLongitude' => $clinicLongitude,
+'mapUrl' => $mapUrl,
+'mapEmbedUrl' => $mapEmbedUrl,
+'arrivalNote' => $arrivalNote,
+
         ];
 
         // List of available payment methods
