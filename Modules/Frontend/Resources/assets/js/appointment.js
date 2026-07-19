@@ -43,42 +43,212 @@ document.addEventListener('DOMContentLoaded', () => {
     this.value = this.value.replace(/[^0-9]/g, '');
   });
 
+  // if (paymentDetails) {
+  //   console.log(paymentDetails);
+
+  //   Swal.fire({
+  //     title: 'Payment Success',
+  //     html: `
+  //       <p class="px-3 mx-5">Your appointment with <strong>Dr. ${paymentDetails.doctorName}</strong> at
+  //       <strong>${paymentDetails.clinicName}</strong> has been confirmed on
+  //       <strong>${paymentDetails.formate_appointment_time}</strong> at
+  //       <strong>${paymentDetails.formate_appointment_date}</strong>.</p>
+  //       <div>
+  //         <p><strong>Booking ID:</strong> #${paymentDetails.bookingId}</p>
+  //         <p><strong>Payment via:</strong> ${capitalizeFirstLetter(paymentDetails.paymentVia)}</p>
+  //         <p><strong>Total Payment:</strong> ${paymentDetails.currency}${paymentDetails.totalAmount}</p>
+  //         </div>
+  //     `,
+
+
+  //     icon: 'success',
+  //     confirmButtonText: 'Close',
+  //     confirmButtonColor: '#FF6F61',
+  //     allowOutsideClick: false
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       // Redirect to appointment detail page using the booking ID
+  //       if (paymentDetails.bookingId && paymentDetails.bookingId !== 'N/A') {
+  //         const redirectUrl = `${routes.appointmentDetails}/${paymentDetails.bookingId}`;
+  //         console.log('Redirecting to appointment details:', redirectUrl);
+  //         window.location.href = redirectUrl;
+  //       } else {
+  //         console.error('Invalid booking ID:', paymentDetails.bookingId);
+  //         window.location.href = routes.appointmentList;
+  //       }
+  //     }
+  //   })
+  // }
+// new code
   if (paymentDetails) {
-    console.log(paymentDetails);
-
-    Swal.fire({
-      title: 'Payment Success',
-      html: `
-        <p class="px-3 mx-5">Your appointment with <strong>Dr. ${paymentDetails.doctorName}</strong> at
-        <strong>${paymentDetails.clinicName}</strong> has been confirmed on
-        <strong>${paymentDetails.formate_appointment_time}</strong> at
-        <strong>${paymentDetails.formate_appointment_date}</strong>.</p>
-        <div>
-          <p><strong>Booking ID:</strong> #${paymentDetails.bookingId}</p>
-          <p><strong>Payment via:</strong> ${capitalizeFirstLetter(paymentDetails.paymentVia)}</p>
-          <p><strong>Total Payment:</strong> ${paymentDetails.currency}${paymentDetails.totalAmount}</p>
-          </div>
-      `,
-
-
-      icon: 'success',
-      confirmButtonText: 'Close',
-      confirmButtonColor: '#FF6F61',
-      allowOutsideClick: false
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Redirect to appointment detail page using the booking ID
-        if (paymentDetails.bookingId && paymentDetails.bookingId !== 'N/A') {
-          const redirectUrl = `${routes.appointmentDetails}/${paymentDetails.bookingId}`;
-          console.log('Redirecting to appointment details:', redirectUrl);
-          window.location.href = redirectUrl;
-        } else {
-          console.error('Invalid booking ID:', paymentDetails.bookingId);
-          window.location.href = routes.appointmentList;
-        }
-      }
-    })
+  const escapeHtml = (value) => {
+    const element = document.createElement('div')
+    element.textContent = value == null ? '' : String(value)
+    return element.innerHTML
   }
+
+  const doctorName = escapeHtml(paymentDetails.doctorName || 'Not available')
+  const clinicName = escapeHtml(paymentDetails.clinicName || 'Not available')
+  const appointmentDate = escapeHtml(
+    paymentDetails.formate_appointment_date || 'Not available'
+  )
+  const appointmentTime = escapeHtml(
+    paymentDetails.formate_appointment_time || 'Not available'
+  )
+  const clinicAddress = escapeHtml(
+    paymentDetails.clinicAddress || 'Address not available'
+  )
+  const clinicPhone = escapeHtml(paymentDetails.clinicPhone || '')
+  const bookingId = escapeHtml(paymentDetails.bookingId || 'N/A')
+  const paymentVia = escapeHtml(
+    capitalizeFirstLetter(paymentDetails.paymentVia || '')
+  )
+  const currency = escapeHtml(paymentDetails.currency || '')
+  const totalAmount = escapeHtml(paymentDetails.totalAmount || '')
+  const arrivalNote = escapeHtml(
+    paymentDetails.arrivalNote ||
+      'Please arrive 10 minutes early for check-in.'
+  )
+
+  // Only accept Google Maps URLs supplied by the server.
+  const isGoogleMapsUrl = (url) => {
+    try {
+      const parsedUrl = new URL(url)
+      return (
+        parsedUrl.protocol === 'https:' &&
+        (
+          parsedUrl.hostname === 'www.google.com' ||
+          parsedUrl.hostname === 'google.com' ||
+          parsedUrl.hostname.endsWith('.google.com')
+        )
+      )
+    } catch (error) {
+      return false
+    }
+  }
+
+  const mapUrl = isGoogleMapsUrl(paymentDetails.mapUrl)
+    ? paymentDetails.mapUrl
+    : ''
+
+  const mapEmbedUrl = isGoogleMapsUrl(paymentDetails.mapEmbedUrl)
+    ? paymentDetails.mapEmbedUrl
+    : ''
+
+  const mapHtml = mapEmbedUrl
+    ? `
+      <div class="mt-3">
+        <iframe
+          src="${mapEmbedUrl}"
+          width="100%"
+          height="190"
+          style="border:0; border-radius:10px;"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Clinic location">
+        </iframe>
+      </div>
+    `
+    : ''
+
+  const directionsHtml = mapUrl
+    ? `
+      <a
+        href="${mapUrl}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-primary btn-sm mt-2"
+      >
+        <i class="ph ph-map-pin me-1"></i>
+        Get Directions
+      </a>
+    `
+    : ''
+
+  const phoneHtml = clinicPhone
+    ? `
+      <p class="mb-1">
+        <strong>Phone:</strong>
+        <a href="tel:${clinicPhone.replace(/[^0-9+]/g, '')}">
+          ${clinicPhone}
+        </a>
+      </p>
+    `
+    : ''
+
+  Swal.fire({
+    title: 'Appointment Confirmed',
+    icon: 'success',
+    width: 650,
+    html: `
+      <div class="text-start px-2">
+        <p class="mb-3">
+          Your appointment with <strong>Dr. ${doctorName}</strong>
+          at <strong>${clinicName}</strong> has been confirmed.
+        </p>
+
+        <div class="bg-light rounded p-3 mb-3">
+          <p class="mb-1">
+            <strong>Date:</strong> ${appointmentDate}
+          </p>
+
+          <p class="mb-1">
+            <strong>Time:</strong> ${appointmentTime}
+          </p>
+
+          <p class="mb-1">
+            <strong>Booking ID:</strong> #${bookingId}
+          </p>
+
+          <p class="mb-1">
+            <strong>Payment via:</strong> ${paymentVia}
+          </p>
+
+          <p class="mb-0">
+            <strong>Total paid:</strong> ${currency}${totalAmount}
+          </p>
+        </div>
+
+        <div class="border rounded p-3">
+          <h6 class="mb-2">
+            <i class="ph ph-map-pin me-1"></i>
+            Clinic Location
+          </h6>
+
+          <p class="mb-1"><strong>${clinicName}</strong></p>
+          <p class="mb-1">${clinicAddress}</p>
+
+          ${phoneHtml}
+          ${directionsHtml}
+          ${mapHtml}
+        </div>
+
+        <div class="alert alert-info mt-3 mb-0">
+          <i class="ph ph-clock me-1"></i>
+          <strong>Arrival reminder:</strong> ${arrivalNote}
+        </div>
+      </div>
+    `,
+    confirmButtonText: 'View Appointment',
+    confirmButtonColor: '#FF6F61',
+    allowOutsideClick: false
+  }).then((result) => {
+    if (!result.isConfirmed) {
+      return
+    }
+
+    if (
+      paymentDetails.bookingId &&
+      paymentDetails.bookingId !== 'N/A'
+    ) {
+      window.location.href =
+        `${routes.appointmentDetails}/${paymentDetails.bookingId}`
+    } else {
+      window.location.href = routes.appointmentList
+    }
+  })
+}
 
   const walletPaymentMethod = document.querySelector('#method-Wallet')
   if (walletPaymentMethod) {
@@ -1522,19 +1692,68 @@ async function submitForm() {
       submitButton.disabled = false
 
       if (state.selectedPaymentMethod == 'cash' || state.selectedPaymentMethod == 'Wallet') {
+        // const paymentDetails = {
+        //   doctorName: data.data.doctor_name || 'N/A',
+        //   doctorExpert: data.data.doctor_expert || '',
+        //   clinicName: data.data.clinic_name || 'N/A',
+        //   serviceName: data.data.servicename || data.data.service_name || data.data.serviceName || state.selectedServiceName || 'Service Name Not Available',
+        //   appointmentDate: data.data.formate_appointment_date || 'N/A',
+        //   appointmentTime: state.selectedTime || 'N/A',
+        //   bookingId: data.data.id || 'N/A',
+        //   paymentVia: state.selectedPaymentMethod || 'N/A',
+        //   currency: data.data.currency_symbol || 'N/A',
+        //   totalAmount: data.data.total_amount || '0.00',
+        //   advancepayment: data.data.advance_paid_amount || '0',
+        // }
         const paymentDetails = {
-          doctorName: data.data.doctor_name || 'N/A',
-          doctorExpert: data.data.doctor_expert || '',
-          clinicName: data.data.clinic_name || 'N/A',
-          serviceName: data.data.servicename || data.data.service_name || data.data.serviceName || state.selectedServiceName || 'Service Name Not Available',
-          appointmentDate: data.data.formate_appointment_date || 'N/A',
-          appointmentTime: state.selectedTime || 'N/A',
-          bookingId: data.data.id || 'N/A',
-          paymentVia: state.selectedPaymentMethod || 'N/A',
-          currency: data.data.currency_symbol || 'N/A',
-          totalAmount: data.data.total_amount || '0.00',
-          advancepayment: data.data.advance_paid_amount || '0',
-        }
+  doctorName: data.data.doctor_name || 'N/A',
+  doctorExpert: data.data.doctor_expert || '',
+  clinicName: data.data.clinic_name || 'N/A',
+
+  serviceName:
+    data.data.servicename ||
+    data.data.service_name ||
+    data.data.serviceName ||
+    state.selectedServiceName ||
+    'Service Name Not Available',
+
+  appointmentDate:
+    data.data.formate_appointment_date || 'N/A',
+
+  appointmentTime:
+    state.selectedTime || 'N/A',
+
+  bookingId:
+    data.data.id || 'N/A',
+
+  paymentVia:
+    state.selectedPaymentMethod || 'N/A',
+
+  currency:
+    data.data.currency_symbol || '',
+
+  totalAmount:
+    data.data.total_amount || '0.00',
+
+  advancepayment:
+    data.data.advance_paid_amount || '0',
+
+  // Clinic map information returned by saveAppointment().
+  clinicAddress:
+    data.data.clinic_address || '',
+
+  clinicPhone:
+    data.data.clinic_phone || '',
+
+  mapUrl:
+    data.data.map_url || '',
+
+  mapEmbedUrl:
+    data.data.map_embed_url || '',
+
+  arrivalNote:
+    data.data.arrival_note || 'Please arrive 10 minutes early.'
+}
 
         Swal.fire({
           // title: 'Appointment Submitted!ss',
@@ -1591,6 +1810,86 @@ async function submitForm() {
                          <a href="#" class="text-decoration-none fw-semibold">${paymentDetails.serviceName}</a></p>
                         <p class="mb-2 text-body">Booking ID:
                          <a href="#" class="text-decoration-none fw-semibold">#${paymentDetails.bookingId}</a></p>
+
+<div class="bg-primary-subtle border-none rounded-3 p-3 my-3 text-start">
+
+  <h6 class="mb-2 fw-semibold">
+    <i class="ph ph-map-pin me-1"></i>
+    ${paymentDetails.clinicName || 'Clinic Location'}
+  </h6>
+
+  ${paymentDetails.clinicAddress
+    ? `
+      <p class="mb-2 text-body">
+        ${paymentDetails.clinicAddress}
+      </p>
+    `
+    : `
+      <p class="mb-2 text-muted">
+        Clinic address is not available.
+      </p>
+    `
+  }
+
+  ${paymentDetails.clinicPhone
+    ? `
+      <p class="mb-2">
+        <i class="ph ph-phone me-1"></i>
+
+        <a
+          href="tel:${paymentDetails.clinicPhone.replace(/[^0-9+]/g, '')}"
+          class="text-decoration-none"
+        >
+          ${paymentDetails.clinicPhone}
+        </a>
+      </p>
+    `
+    : ''
+  }
+
+  ${paymentDetails.mapUrl
+    ? `
+      <a
+        href="${paymentDetails.mapUrl}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-sm btn-outline-primary mb-2"
+      >
+        <i class="ph ph-navigation-arrow me-1"></i>
+        Get Directions
+      </a>
+    `
+    : `
+      <p class="small text-muted mb-2">
+        Directions are not available for this clinic.
+      </p>
+    `
+  }
+
+  ${paymentDetails.mapEmbedUrl
+    ? `
+      <div class="mt-2">
+        <iframe
+          src="${paymentDetails.mapEmbedUrl}"
+          width="100%"
+          height="180"
+          style="border:0; border-radius:8px;"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+          title="${paymentDetails.clinicName} location">
+        </iframe>
+      </div>
+    `
+    : ''
+  }
+
+  <p class="mt-3 mb-0 text-warning fw-semibold">
+    <i class="ph ph-clock me-1"></i>
+    ${paymentDetails.arrivalNote}
+  </p>
+
+</div>
                                 <div class="d-flex gap-2 align-items-center justify-content-center">
                                   <p class="mb-0 text-body">Payment via: </p>
                                     <div class="d-flex gap-2 align-items-center">
