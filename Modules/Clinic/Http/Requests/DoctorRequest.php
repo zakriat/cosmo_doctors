@@ -34,6 +34,15 @@ class DoctorRequest extends FormRequest
                         'regex:/[0-9]/',      // must contain at least one digit
                         'regex:/[@$!%*#?&]/', // must contain a special character
                     ],
+
+            
+            'gmc_number' => [
+            'nullable',
+            'string',
+            'max:30',
+            Rule::unique('users', 'gmc_number')->ignore($this->route('doctor')),
+            ],
+            
             'confirm_password' => 'required|same:password',
             'mobile' => 'required|string',
             'commission_id' => 'required|array',
@@ -51,6 +60,8 @@ class DoctorRequest extends FormRequest
             'doctor_email.required' => 'Email is required.',
             'doctor_email.email' => 'Please enter a valid email address.',
             'mobile.required' => 'Contact number is required.',
+            'gmc_number.unique' => 'This GMC number is already assigned to another doctor.',
+            'gmc_number.max' => 'The GMC number may not be greater than 30 characters.',
         ];
     }
 
